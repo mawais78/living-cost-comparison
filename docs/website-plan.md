@@ -9,11 +9,11 @@ Core message: **Compare the real cost of living.**
 ## Brand system
 
 - Personality: credible, calm, practical and globally minded.
-- Visual idea: an editorial “global ledger”—precise data UI paired with warm, human typography.
-- Primary colours: Ledger Navy `#0B1739`, Signal Blue `#2F65F5`, Context Amber `#F4C15D`.
-- Support colours: Proof Mint `#69D4AA`, Paper `#F7F8FB`, Rule `#DDE3ED`.
-- Type: system sans-serif for controls and data; Georgia for high-level editorial headlines.
-- Logo: three compact bars representing comparable cost categories and a highlighted difference.
+- Visual idea: a modern civic-data publication—precise, restrained and built on a strict 8-point grid.
+- Primary colours: Ledger Ink `#142B3D`, Signal Blue `#2F5BFF`, Compare Gold `#E5A82A`.
+- Support colours: Paper `#F4F6F8`, Rule `#D7DEE5`, White `#FFFFFF`.
+- Type: Helvetica Neue/system sans-serif throughout, with a system mono stack for figures and dates.
+- Logo: balanced brackets hold two comparison bars to the same measurement standard.
 
 ## Information architecture
 

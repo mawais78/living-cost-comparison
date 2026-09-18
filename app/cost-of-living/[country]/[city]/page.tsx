@@ -57,7 +57,7 @@ export default async function CityPage({ params }: Props) {
             <p className="eyebrow text-[var(--blue)]">Monthly budget</p>
             <h2>Typical costs by category</h2>
             <div className="cost-table" role="table" aria-label={`${city.city} cost categories`}>
-              {costCategories.map((category) => <div className="cost-row" role="row" key={category.key}><span role="cell">{category.label}</span><strong role="cell">${city.costs[category.key].toLocaleString()}</strong><span className="cost-track" aria-hidden="true"><i style={{ width: `${Math.max(8, (city.costs[category.key] / city.costs.housing) * 100)}%`, background: city.accent }} /></span></div>)}
+              {costCategories.map((category) => <div className="cost-row" role="row" key={category.key}><span role="cell">{category.label}</span><strong role="cell">${city.costs[category.key].toLocaleString()}</strong><span className="cost-track" aria-hidden="true"><i style={{ width: `${Math.max(8, (city.costs[category.key] / city.costs.housing) * 100)}%` }} /></span></div>)}
             </div>
             <h2>What this budget includes</h2>
             <p>The estimate combines housing, groceries, local transport, basic utilities and discretionary lifestyle spending. It is designed as a planning baseline, not a quote: neighbourhood, lease terms, household needs and personal habits can move the total substantially.</p>
