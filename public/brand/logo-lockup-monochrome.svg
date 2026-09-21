@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 100" role="img" aria-labelledby="title desc">
+  <title id="title">Living Cost Comparison monochrome logo</title>
+  <desc id="desc">Single-colour Living Cost Comparison logo.</desc>
+  <g transform="translate(1 2)" fill="#27302C">
+    <path d="M4 72V51c0-5 4-9 9-9h14c3 0 5-2 5-5v-6c0-5 4-9 9-9h12c5 0 9 4 9 9v41H4Z"/>
+    <path d="M68 72V34c0-5 4-9 9-9h7c5 0 9-4 9-9v-6c0-5 4-9 9-9h13c5 0 9 4 9 9v62H68Z"/>
+    <rect x="3" y="80" width="122" height="13" rx="6.5"/>
+  </g>
+  <text x="151" y="44" fill="#27302C" font-family="Inter, Arial, Helvetica, sans-serif" font-size="39" font-weight="800" letter-spacing="-1.8">Living Cost</text>
+  <text x="151" y="86" fill="#27302C" font-family="Inter, Arial, Helvetica, sans-serif" font-size="39" font-weight="800" letter-spacing="-1.8">Comparison</text>
+</svg>

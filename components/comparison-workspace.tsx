@@ -1,54 +1,29 @@
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
-import { ArrowRight, ArrowRightLeft } from "lucide-react"
+import { ArrowDownRight, ArrowRight, ArrowRightLeft, ArrowUpRight } from "lucide-react"
 import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
+import { CityCombobox } from "@/components/city-combobox"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { cities, costCategories, getCity, getMonthlyCost, type CityCost, type householdMultipliers, type lifestyleMultipliers } from "@/lib/cost-data"
+import { cities, costCategories, defaultComparison, getCity, getComparisonPath, getMonthlyCost, householdMultipliers, lifestyleMultipliers } from "@/lib/cost-data"
 
 type Household = keyof typeof householdMultipliers
 type Lifestyle = keyof typeof lifestyleMultipliers
 const money = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 })
 
-function CitySelect({ label, value, tone, onValueChange }: { label: string; value: string; tone: "origin" | "destination"; onValueChange: (value: string) => void }) {
-  const selected = getCity(value)
+function CostCell({ value, max, tone, label }: { value: number; max: number; tone: "origin" | "destination"; label: string }) {
   return (
-    <label className="grid min-w-0 gap-2">
-      <span className="field-label">{label}</span>
-      <Select value={value} onValueChange={(next) => next && onValueChange(next)}>
-        <SelectTrigger className="h-14 w-full rounded-xl border-[var(--line-strong)] bg-white px-4 shadow-none">
-          <SelectValue>
-            <span className="flex min-w-0 items-center gap-3">
-              <span className={`city-dot ${tone}`} />
-              <span className="min-w-0 text-left">
-                <span className="block truncate font-semibold text-[var(--ink)]">{selected.city}</span>
-                <span className="block truncate text-xs text-[var(--muted-ink)]">{selected.country}</span>
-              </span>
-            </span>
-          </SelectValue>
-        </SelectTrigger>
-        <SelectContent position="popper" align="start" className="min-w-[260px]">
-          {cities.map((city) => <SelectItem key={city.slug} value={city.slug}>{city.city}, {city.country}</SelectItem>)}
-        </SelectContent>
-      </Select>
-    </label>
-  )
-}
-
-function CostBar({ left, right, from, to }: { left: number; right: number; from: CityCost; to: CityCost }) {
-  const max = Math.max(left, right)
-  return (
-    <div className="grid gap-2">
-      <div className="flex items-center gap-2"><span className="bar-label">{from.city}</span><span className="cost-bar origin" style={{ width: `${Math.max(6, (left / max) * 100)}%` }} /><span className="bar-value">{money.format(left)}</span></div>
-      <div className="flex items-center gap-2"><span className="bar-label">{to.city}</span><span className="cost-bar destination" style={{ width: `${Math.max(6, (right / max) * 100)}%` }} /><span className="bar-value">{money.format(right)}</span></div>
+    <div className="studio-cost-cell" data-label={label}>
+      <strong>{money.format(value)}</strong>
+      <span className="studio-cost-track"><i className={`studio-cost-bar ${tone}`} style={{ width: `${Math.max(6, (value / max) * 100)}%` }} /></span>
     </div>
   )
 }
 
-export function ComparisonWorkspace({ initialFrom = "london", initialTo = "amsterdam", embedded = false }: { initialFrom?: string; initialTo?: string; embedded?: boolean }) {
+export function ComparisonWorkspace({ initialFrom = defaultComparison.from, initialTo = defaultComparison.to, embedded = false }: { initialFrom?: string; initialTo?: string; embedded?: boolean }) {
   const [fromSlug, setFromSlug] = useState(initialFrom)
   const [toSlug, setToSlug] = useState(initialTo)
   const [household, setHousehold] = useState<Household>("single")
@@ -67,6 +42,18 @@ export function ComparisonWorkspace({ initialFrom = "london", initialTo = "amste
   }, [from, to, household, lifestyle, income])
 
   const swap = () => { setFromSlug(toSlug); setToSlug(fromSlug) }
+  const destinationDelta = result.difference === 0
+    ? "No monthly difference"
+    : `${money.format(Math.abs(result.difference))} ${result.difference > 0 ? "more" : "less"} per month`
+  const adjustedCategories = useMemo(() => {
+    const factor = householdMultipliers[household] * lifestyleMultipliers[lifestyle]
+    return costCategories.map((category) => {
+      const fromValue = Math.round(from.costs[category.key] * factor / 10) * 10
+      const toValue = Math.round(to.costs[category.key] * factor / 10) * 10
+      return { ...category, fromValue, toValue, delta: toValue - fromValue }
+    })
+  }, [from, to, household, lifestyle])
+  const largestChange = adjustedCategories.reduce((largest, item) => Math.abs(item.delta) > Math.abs(largest.delta) ? item : largest, adjustedCategories[0])
 
   useEffect(() => {
     const context = typeof document === "undefined" ? undefined : document.modelContext
@@ -121,44 +108,77 @@ export function ComparisonWorkspace({ initialFrom = "london", initialTo = "amste
   }, [])
 
   return (
-    <section id="compare" className={embedded ? "comparison-shell embedded" : "comparison-shell"} aria-label="Living cost calculator">
-      <div className="comparison-controls">
-        <div className="grid gap-3 lg:grid-cols-[1fr_auto_1fr] lg:items-end">
-          <CitySelect label="Current city" value={fromSlug} tone="origin" onValueChange={setFromSlug} />
-          <Button type="button" variant="outline" size="icon" className="swap-button mb-1" onClick={swap} aria-label="Swap cities"><ArrowRightLeft className="size-4" /></Button>
-          <CitySelect label="Comparison city" value={toSlug} tone="destination" onValueChange={setToSlug} />
+    <section id="compare" className={embedded ? "comparison-studio embedded" : "comparison-studio"} aria-label="Living cost calculator">
+      <aside className="studio-setup">
+        <div className="studio-setup-heading">
+          <span>01</span>
+          <div><p className="eyebrow">Your setup</p><h2>Build a like-for-like comparison.</h2></div>
         </div>
-        <div className="mt-4 grid gap-4 sm:grid-cols-3">
-          <label className="grid gap-2">
+
+        <div className="studio-city-fields">
+          <CityCombobox label="Current city" value={fromSlug} onValueChange={setFromSlug} disabledSlug={toSlug} />
+          <Button type="button" variant="outline" className="studio-swap" onClick={swap} aria-label="Swap cities"><ArrowRightLeft className="size-4" /> Swap cities</Button>
+          <CityCombobox label="Comparison city" value={toSlug} onValueChange={setToSlug} disabledSlug={fromSlug} />
+        </div>
+
+        <div className="studio-assumptions">
+          <label className="studio-field">
             <span className="field-label">Household</span>
             <Select value={household} onValueChange={(next) => next && setHousehold(next as Household)}><SelectTrigger className="w-full bg-white"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="single">1 person</SelectItem><SelectItem value="couple">Couple</SelectItem><SelectItem value="family">Family of 4</SelectItem></SelectContent></Select>
           </label>
-          <label className="grid gap-2">
+          <label className="studio-field">
             <span className="field-label">Lifestyle</span>
             <Select value={lifestyle} onValueChange={(next) => next && setLifestyle(next as Lifestyle)}><SelectTrigger className="w-full bg-white"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="lean">Lean</SelectItem><SelectItem value="balanced">Balanced</SelectItem><SelectItem value="comfortable">Comfortable</SelectItem></SelectContent></Select>
           </label>
-          <label className="grid gap-2">
-            <span className="field-label">Net income · USD / month</span>
-            <Input type="number" min={0} step={100} value={income} onChange={(event) => setIncome(Number(event.target.value) || 0)} className="bg-white" />
+          <label className="studio-field">
+            <span className="field-label">Monthly take-home · USD</span>
+            <span className="studio-income-input"><b>$</b><Input type="number" min={0} step={100} value={income} onChange={(event) => setIncome(Number(event.target.value) || 0)} /></span>
           </label>
         </div>
-      </div>
+        <p className="studio-data-note"><strong>Planning estimate</strong>Prototype data in USD equivalent, updated {from.updated}. Taxes and moving costs are excluded.</p>
+      </aside>
 
-      <div className="result-grid">
-        <div className="result-summary">
-          <span className="eyebrow">Comparison result</span>
-          <h2 className="mt-4 text-2xl font-semibold leading-tight tracking-[-0.035em] text-white sm:text-[32px]">{to.city} is <span className="text-[var(--amber)]">{result.percent}% {result.difference >= 0 ? "more" : "less"} expensive</span> for your setup.</h2>
-          <p className="mt-4 max-w-lg text-sm leading-6 text-white/70">To keep roughly the same lifestyle, a {money.format(income)} monthly take-home in {from.city} translates to about <strong className="font-semibold text-white">{money.format(result.equivalent)}</strong> in {to.city}.</p>
-          <div className="mt-6 grid grid-cols-2 gap-3"><div className="metric-card"><span>{from.city} budget</span><strong>{money.format(result.fromTotal)}</strong><small>per month</small></div><div className="metric-card"><span>{to.city} budget</span><strong>{money.format(result.toTotal)}</strong><small>per month</small></div></div>
-          <div className="data-meta"><span>Household adjusted</span><span>Prototype estimates</span></div>
-        </div>
-        <div className="breakdown-panel">
-          <div className="breakdown-heading"><div><p className="eyebrow text-[var(--blue)]">Cost structure</p><h3>Monthly breakdown</h3></div><span>USD equivalent<br />{from.updated}</span></div>
-          <div className="mt-6 grid gap-5">
-            {costCategories.map((category) => <div key={category.key} className="grid gap-2"><div className="flex items-center justify-between text-xs"><span className="font-semibold text-[var(--ink)]">{category.label}</span><span className="text-[var(--muted-ink)]">{money.format(to.costs[category.key] - from.costs[category.key])}</span></div><CostBar left={from.costs[category.key]} right={to.costs[category.key]} from={from} to={to} /></div>)}
+      <div className="studio-results" aria-live="polite">
+        <header className="studio-answer">
+          <div className="studio-answer-top"><span className="eyebrow">Your result</span><span>{from.city} <ArrowRight /> {to.city}</span></div>
+          <div className="studio-answer-title">
+            <span className={result.difference > 0 ? "increase" : result.difference < 0 ? "decrease" : "neutral"}>{result.difference > 0 ? <ArrowUpRight /> : result.difference < 0 ? <ArrowDownRight /> : null}</span>
+            <h2>{result.difference === 0 ? <>The modeled monthly cost is the same.</> : <><strong>{to.city}</strong> is <strong>{result.percent}%</strong> {result.difference > 0 ? "more" : "less"} expensive than {from.city}.</>}</h2>
           </div>
-          <Link href="/compare/london-vs-amsterdam" className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-[var(--blue)]">Open the full comparison <ArrowRight className="size-4" /></Link>
+          <p>{destinationDelta} for a {household === "single" ? "one-person" : household} household with a {lifestyle} lifestyle.</p>
+        </header>
+
+        <div className="studio-metrics" aria-label="Comparison summary">
+          <article><span>Current monthly budget</span><strong>{money.format(result.fromTotal)}</strong><small>{from.city}</small></article>
+          <article><span>Destination budget</span><strong>{money.format(result.toTotal)}</strong><small>{to.city} · {destinationDelta}</small></article>
+          <article className="salary"><span>Equivalent take-home</span><strong>{money.format(result.equivalent)}</strong><small>Needed in {to.city} to match {money.format(income)}</small></article>
         </div>
+
+        <section className="studio-breakdown" aria-labelledby="breakdown-title">
+          <div className="studio-breakdown-heading">
+            <div><p className="eyebrow">Cost breakdown</p><h3 id="breakdown-title">Where the monthly budget changes</h3></div>
+            <div className="studio-legend"><span><i className="origin" />{from.city}</span><span><i className="destination" />{to.city}</span></div>
+          </div>
+          <div className="studio-breakdown-head" aria-hidden="true"><span>Category</span><span>{from.city}</span><span>{to.city}</span><span>Change</span></div>
+          <div className="studio-breakdown-list">
+            {adjustedCategories.map(({ key, label, fromValue, toValue, delta }) => {
+              const max = Math.max(fromValue, toValue)
+              return (
+                <article key={key} className="studio-breakdown-row">
+                  <h4>{label}</h4>
+                  <CostCell value={fromValue} max={max} tone="origin" label={from.city} />
+                  <CostCell value={toValue} max={max} tone="destination" label={to.city} />
+                  <span className={`studio-delta ${delta > 0 ? "increase" : delta < 0 ? "decrease" : "neutral"}`}>{delta === 0 ? "Same" : `${delta > 0 ? "+" : "−"}${money.format(Math.abs(delta))}`}</span>
+                </article>
+              )
+            })}
+          </div>
+
+          <div className="studio-breakdown-footer">
+            <div className="studio-largest-change"><span>Largest change</span><p>{largestChange.delta === 0 ? "Every category is currently equal." : <><strong>{largestChange.label}</strong> has the biggest modeled difference at {money.format(Math.abs(largestChange.delta))} per month.</>}</p></div>
+            {from.slug !== to.slug && <Link href={getComparisonPath(from.slug, to.slug)} className="studio-detail-link">Open shareable comparison <ArrowRight /></Link>}
+          </div>
+        </section>
       </div>
     </section>
   )

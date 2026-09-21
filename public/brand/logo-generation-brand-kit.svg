@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1100" viewBox="0 0 1600 1100" role="img" aria-labelledby="title desc">
+  <title id="title">Living Cost Comparison logo generation brand kit</title>
+  <desc id="desc">A visual brand board showing the website colour palette, typography, brand character and shared baseline logo direction.</desc>
+  <rect width="1600" height="1100" fill="#F6F5F0"/>
+  <rect x="0" y="0" width="1600" height="178" fill="#27302C"/>
+  <text x="84" y="70" fill="#B7C4BD" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="3">LOGO GENERATION BRAND KIT · QUIET MEASURE</text>
+  <text x="84" y="126" fill="#FFFEFA" font-family="Inter, Arial, sans-serif" font-size="48" font-weight="650" letter-spacing="-1.8">Living Cost Comparison</text>
+  <text x="1516" y="70" fill="#B7C4BD" text-anchor="end" font-family="SFMono-Regular, Consolas, monospace" font-size="16">21 SEP 2026</text>
+  <text x="1516" y="126" fill="#D9E1DC" text-anchor="end" font-family="Inter, Arial, sans-serif" font-size="20">Two places. One shared measure.</text>
+
+  <text x="84" y="242" fill="#405C50" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="750" letter-spacing="2.2">BRAND CHARACTER</text>
+  <text x="84" y="291" fill="#27302C" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="650" letter-spacing="-1">Calm clarity for a major life decision.</text>
+  <text x="84" y="329" fill="#68716C" font-family="Inter, Arial, sans-serif" font-size="19">Grounded · clear · measured · independent · useful</text>
+
+  <rect x="1110" y="220" width="406" height="144" rx="18" fill="#FFFEFA" stroke="#DEDFD9"/>
+  <g transform="translate(1146 244)">
+    <rect width="96" height="96" rx="24" fill="#405C50"/>
+    <path d="M22 74H74" fill="none" stroke="#FFFEFA" stroke-width="7" stroke-linecap="round"/>
+    <rect x="26" y="43" width="15" height="25" rx="4" fill="#FFFEFA"/>
+    <rect x="54" y="21" width="15" height="47" rx="4" fill="#FFFEFA" opacity=".76"/>
+  </g>
+  <text x="1268" y="264" fill="#405C50" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="750" letter-spacing="1.8">STRUCTURAL CUE</text>
+  <text x="1268" y="296" fill="#27302C" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="650">Shared Baseline</text>
+  <text x="1268" y="324" fill="#68716C" font-family="Inter, Arial, sans-serif" font-size="15">Two measures on equal ground.</text>
+  <text x="1268" y="347" fill="#89978F" font-family="Inter, Arial, sans-serif" font-size="13">Not final artwork</text>
+
+  <line x1="84" y1="394" x2="1516" y2="394" stroke="#C8CBC5"/>
+  <text x="84" y="448" fill="#405C50" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="750" letter-spacing="2.2">CORE COLOUR</text>
+
+  <g transform="translate(84 476)">
+    <rect width="342" height="148" rx="14" fill="#27302C"/>
+    <text x="24" y="98" fill="#FFFEFA" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="650">Pine Ink</text>
+    <text x="24" y="126" fill="#B7C4BD" font-family="SFMono-Regular, Consolas, monospace" font-size="16">#27302C</text>
+  </g>
+  <g transform="translate(446 476)">
+    <rect width="342" height="148" rx="14" fill="#405C50"/>
+    <text x="24" y="98" fill="#FFFEFA" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="650">Forest Measure</text>
+    <text x="24" y="126" fill="#D9E1DC" font-family="SFMono-Regular, Consolas, monospace" font-size="16">#405C50</text>
+  </g>
+  <g transform="translate(808 476)">
+    <rect width="342" height="148" rx="14" fill="#89978F"/>
+    <text x="24" y="98" fill="#FFFFFF" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="650">Muted Sage</text>
+    <text x="24" y="126" fill="#FFFFFF" opacity=".76" font-family="SFMono-Regular, Consolas, monospace" font-size="16">#89978F</text>
+  </g>
+  <g transform="translate(1170 476)">
+    <rect width="346" height="148" rx="14" fill="#FFFEFA" stroke="#DEDFD9"/>
+    <text x="24" y="98" fill="#27302C" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="650">Warm Paper</text>
+    <text x="24" y="126" fill="#68716C" font-family="SFMono-Regular, Consolas, monospace" font-size="16">#F6F5F0 / #FFFEFA</text>
+  </g>
+
+  <text x="84" y="689" fill="#405C50" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="750" letter-spacing="2.2">TYPE &amp; LOCKUP</text>
+  <rect x="84" y="716" width="704" height="174" rx="16" fill="#FFFEFA" stroke="#DEDFD9"/>
+  <text x="116" y="771" fill="#68716C" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="650">INTER · HUMANIST SANS · SEMIBOLD WORDMARK</text>
+  <text x="116" y="834" fill="#27302C" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="650" letter-spacing="-1.4">Living Cost Comparison</text>
+  <text x="116" y="868" fill="#89978F" font-family="SFMono-Regular, Consolas, monospace" font-size="15">Data uses neutral monospace, never the wordmark.</text>
+
+  <text x="836" y="689" fill="#405C50" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="750" letter-spacing="2.2">LOGO DIRECTION</text>
+  <rect x="836" y="716" width="680" height="174" rx="16" fill="#E9EDE9" stroke="#C8CBC5"/>
+  <text x="868" y="760" fill="#27302C" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="650">Use</text>
+  <text x="868" y="794" fill="#68716C" font-family="Inter, Arial, sans-serif" font-size="16">Paired measures · one baseline · soft geometry</text>
+  <text x="868" y="824" fill="#68716C" font-family="Inter, Arial, sans-serif" font-size="16">Square symbol · clear silhouette · one-colour ready</text>
+  <text x="868" y="858" fill="#27302C" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="650">Avoid</text>
+  <text x="960" y="858" fill="#68716C" font-family="Inter, Arial, sans-serif" font-size="16">currency · scales · skyline · pin · globe · gradients</text>
+
+  <rect x="84" y="942" width="1432" height="88" rx="14" fill="#405C50"/>
+  <text x="116" y="977" fill="#D9E1DC" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="750" letter-spacing="1.8">GENERATOR NORTH STAR</text>
+  <text x="116" y="1009" fill="#FFFFFF" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="600">A proprietary abstract sign for two cities compared on equal terms—quiet, useful and unmistakable at 16px.</text>
+  <text x="1516" y="1070" fill="#68716C" text-anchor="end" font-family="Inter, Arial, sans-serif" font-size="14">livingcostcomparison.com</text>
+</svg>

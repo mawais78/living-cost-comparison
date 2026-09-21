@@ -4,10 +4,11 @@ import { ArrowRight, BadgeDollarSign, CalendarClock, CircleGauge, Home } from "l
 import { notFound } from "next/navigation"
 
 import { ComparisonWorkspace } from "@/components/comparison-workspace"
+import { ResearchCitations } from "@/components/research-citations"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import { StructuredData } from "@/components/structured-data"
-import { cities, getMonthlyCost } from "@/lib/cost-data"
+import { cities, getFeaturedCityPairs, getMonthlyCost } from "@/lib/cost-data"
 
 type Props = { params: Promise<{ pair: string }> }
 
@@ -19,14 +20,10 @@ function resolvePair(pair: string) {
   return from && to ? { from, to } : null
 }
 
+export const dynamicParams = true
+
 export function generateStaticParams() {
-  return [
-    { pair: "london-vs-amsterdam" },
-    { pair: "london-vs-lisbon" },
-    { pair: "new-york-vs-london" },
-    { pair: "dubai-vs-london" },
-    { pair: "karachi-vs-dubai" },
-  ]
+  return getFeaturedCityPairs().map(({ from, to }) => ({ pair: `${from.slug}-vs-${to.slug}` }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -35,9 +32,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!citiesPair) return { title: "City comparison" }
   const { from, to } = citiesPair
   return {
-    title: `${from.city} vs ${to.city} Cost of Living (2026)`,
-    description: `Compare the cost of living in ${from.city} and ${to.city}, including housing, groceries, transport and salary equivalence.`,
-    alternates: { canonical: `/compare/${pair}` },
+    title: `${from.city} vs ${to.city} Cost of Living — Prototype`,
+    description: `Explore an illustrative ${from.city} and ${to.city} cost comparison, including housing, groceries, transport and spending-equivalent income.`,
+    alternates: { canonical: `/compare/${from.slug}-vs-${to.slug}` },
+    robots: { index: false, follow: true },
   }
 }
 
@@ -58,9 +56,9 @@ export default async function ComparisonPage({ params }: Props) {
       <section className="subpage-hero">
         <div className="page-shell py-12 sm:py-16">
           <nav className="breadcrumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span>/</span><span>City comparison</span></nav>
-          <p className="eyebrow mt-9 text-[var(--blue)]">Cost of living comparison · 2026</p>
+          <p className="eyebrow mt-9 text-[var(--blue)]">Cost of living comparison · prototype</p>
           <h1 className="subpage-title mt-4">{from.city} vs {to.city}: cost of living</h1>
-          <p className="mt-5 max-w-3xl text-base leading-7 text-[var(--muted-ink)]">For a single person with a balanced lifestyle, {to.city} is estimated to be <strong className="text-[var(--ink)]">{percent}% {difference >= 0 ? "more" : "less"} expensive</strong> than {from.city}. Adjust the assumptions below for a comparison that fits you.</p>
+          <p className="mt-5 max-w-3xl text-base leading-7 text-[var(--muted-ink)]">In the current illustrative model, {to.city} is <strong className="text-[var(--ink)]">{percent}% {difference >= 0 ? "more" : "less"} expensive</strong> than {from.city} for one person with a balanced setting. This is a product demonstration, not verified live market pricing.</p>
           <div className="mt-8"><ComparisonWorkspace initialFrom={from.slug} initialTo={to.slug} embedded /></div>
         </div>
       </section>
@@ -79,6 +77,10 @@ export default async function ComparisonPage({ params }: Props) {
               <div><CircleGauge /><span><strong>Check your margin</strong>Look at what remains after core costs, not only the total cost index.</span></div>
               <div><CalendarClock /><span><strong>Check freshness</strong>Prices move at different speeds, so review the date and confidence by category.</span></div>
             </div>
+            <h2>Why the percentage depends on direction</h2>
+            <p>The current city is the denominator. A basket moving from 100 to 120 is 20% higher, while the reverse move from 120 to 100 is about 16.7% lower. Always read the city order before quoting the result.</p>
+            <h2>What must be researched before a move</h2>
+            <p>Replace prototype housing with real neighborhoods and lease terms, check whether your commute requires a car, calculate destination taxes from gross pay and price healthcare or childcare under the eligibility rules that apply to your household.</p>
           </article>
           <aside className="side-card">
             <p className="footer-label">Continue researching</p>
@@ -88,6 +90,7 @@ export default async function ComparisonPage({ params }: Props) {
           </aside>
         </div>
       </section>
+      <section className="pair-research-section"><div className="page-shell"><ResearchCitations ids={["world-bank-icp", "bls-ce", "oecd-taxing-wages"]} title="References for interpreting this prototype" /><div className="pair-research-links"><Link href="/guides/how-to-compare-cost-of-living">How to compare living costs correctly →</Link><Link href="/guides/equivalent-salary-for-relocation">How to calculate an equivalent salary →</Link></div></div></section>
       <SiteFooter />
     </main>
   )

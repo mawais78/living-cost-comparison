@@ -1,5 +1,7 @@
 # Living Cost Comparison — website foundation
 
+> Product, competitive and SEO scaling decisions are documented in [Competitor analysis and product decisions](./competitor-analysis-and-product-decisions.md). That document governs production-data and page-expansion choices; this file remains the concise foundation summary.
+
 ## Positioning
 
 Living Cost Comparison is a decision tool for people considering a move, remote-work base or salary offer. Its distinctive promise is to connect city prices to a user’s household, lifestyle and take-home pay—then show the assumptions and evidence behind the answer.
@@ -9,11 +11,11 @@ Core message: **Compare the real cost of living.**
 ## Brand system
 
 - Personality: credible, calm, practical and globally minded.
-- Visual idea: a modern civic-data publication—precise, restrained and built on a strict 8-point grid.
-- Primary colours: Ledger Ink `#142B3D`, Signal Blue `#2F5BFF`, Compare Gold `#E5A82A`.
-- Support colours: Paper `#F4F6F8`, Rule `#D7DEE5`, White `#FFFFFF`.
-- Type: Helvetica Neue/system sans-serif throughout, with a system mono stack for figures and dates.
-- Logo: balanced brackets hold two comparison bars to the same measurement standard.
+- Visual idea: “Common Ground”—an editorial comparison guide with a rigorous data layer.
+- Primary colours: Common Ink `#27231F`, Ground Rust `#C84C2F`, Measure Cobalt `#3856E8`.
+- Support colours: Warm Sand `#FAF5E9`, Soft Rule `#DED4C8`, White `#FFFFFF`.
+- Type: Georgia for editorial headings and the wordmark; Helvetica Neue/system sans-serif for interface copy; system mono for figures.
+- Logo: a balance mark representing two cities measured on common ground.
 
 ## Information architecture
 

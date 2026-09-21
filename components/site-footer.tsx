@@ -13,21 +13,29 @@ export function SiteFooter() {
         <div>
           <p className="footer-label">Product</p>
           <div className="footer-links">
-            <Link href="/#compare">Compare cities</Link>
-            <Link href="/compare/london-vs-amsterdam">London vs Amsterdam</Link>
-            <Link href="/cost-of-living/united-kingdom/london">London cost guide</Link>
+            <Link href="/compare-cities">Compare cities</Link>
+            <Link href="/salary-comparison">Salary calculator</Link>
+            <Link href="/cost-of-living-index">Cost of living index</Link>
           </div>
         </div>
         <div>
           <p className="footer-label">Standards</p>
           <div className="footer-links">
             <Link href="/methodology">Methodology</Link>
-            <Link href="/methodology#sources">Sources &amp; freshness</Link>
-            <span>Prototype data · Sep 2026</span>
+            <Link href="/sources">Sources &amp; data status</Link>
+            <Link href="/about">About &amp; editorial policy</Link>
+          </div>
+        </div>
+        <div>
+          <p className="footer-label">Research guides</p>
+          <div className="footer-links">
+            <Link href="/guides/how-to-compare-cost-of-living">How to compare living costs</Link>
+            <Link href="/guides/equivalent-salary-for-relocation">Equivalent salary after moving</Link>
+            <Link href="/guides/cost-of-living-vs-cost-of-labor">Cost of living vs cost of labor</Link>
           </div>
         </div>
       </div>
-      <div className="page-shell footer-base"><span>© 2026 Living Cost Comparison</span><span>livingcostcomparison.com</span></div>
+      <div className="page-shell footer-base"><span>© 2026 Living Cost Comparison</span><span>Research reviewed 22 September 2026</span></div>
     </footer>
   )
 }
