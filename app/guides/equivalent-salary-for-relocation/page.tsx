@@ -7,6 +7,7 @@ import { GuideRail } from "@/components/guide-rail"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import { StructuredData } from "@/components/structured-data"
+import { getSocialMetadata } from "@/lib/seo"
 
 const path = "/guides/equivalent-salary-for-relocation"
 const faqs = [
@@ -20,7 +21,13 @@ export const metadata: Metadata = {
   title: "Equivalent Salary After Moving",
   description: "Calculate the salary needed after relocating using living costs, take-home pay, taxes, benefits and one-time moving expenses.",
   alternates: { canonical: path },
-  openGraph: { type: "article", title: "How to Calculate an Equivalent Salary After Moving", description: "A practical framework for converting current spending power into a relocation salary target.", url: path, images: [{ url: "/images/guides/equivalent-salary-relocation.jpg", width: 1536, height: 1024, alt: "Salary and relocation planning materials arranged on a desk" }] },
+  ...getSocialMetadata({
+    type: "article",
+    title: "How to Calculate an Equivalent Salary After Moving",
+    description: "A practical framework for converting current spending power into a relocation salary target.",
+    path,
+    image: { url: "/images/guides/equivalent-salary-relocation.jpg", width: 1536, height: 1024, alt: "Salary and relocation planning materials arranged on a desk" },
+  }),
 }
 
 export default function EquivalentSalaryGuidePage() {
@@ -28,9 +35,8 @@ export default function EquivalentSalaryGuidePage() {
     <main className="research-page">
       <SiteHeader />
       <StructuredData data={[
-        { "@context": "https://schema.org", "@type": "Article", headline: "How to Calculate an Equivalent Salary After Moving", description: metadata.description, image: "https://livingcostcomparison.com/images/guides/equivalent-salary-relocation.jpg", datePublished: "2026-09-22", dateModified: "2026-09-22", author: { "@type": "Organization", name: "Living Cost Comparison" }, publisher: { "@type": "Organization", name: "Living Cost Comparison" }, mainEntityOfPage: `https://livingcostcomparison.com${path}` },
+        { "@context": "https://schema.org", "@type": "Article", headline: "How to Calculate an Equivalent Salary After Moving", description: metadata.description, image: "https://livingcostcomparison.com/images/guides/equivalent-salary-relocation.jpg", datePublished: "2026-09-22T00:00:00Z", dateModified: "2026-09-23T00:00:00Z", author: { "@type": "Organization", name: "Living Cost Comparison", url: "https://livingcostcomparison.com/about" }, publisher: { "@type": "Organization", name: "Living Cost Comparison", url: "https://livingcostcomparison.com/" }, mainEntityOfPage: `https://livingcostcomparison.com${path}` },
         { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: "https://livingcostcomparison.com/" }, { "@type": "ListItem", position: 2, name: "Guides", item: "https://livingcostcomparison.com/guides" }, { "@type": "ListItem", position: 3, name: "Equivalent salary after moving", item: `https://livingcostcomparison.com${path}` }] },
-        { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map(([question, answer]) => ({ "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer } })) },
       ]} />
 
       <header className="research-mast salary-guide-mast">

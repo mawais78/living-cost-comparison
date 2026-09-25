@@ -7,6 +7,7 @@ import { GuideRail } from "@/components/guide-rail"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import { StructuredData } from "@/components/structured-data"
+import { getSocialMetadata } from "@/lib/seo"
 
 const path = "/guides/cost-of-living-vs-cost-of-labor"
 const faqs = [
@@ -20,7 +21,13 @@ export const metadata: Metadata = {
   title: "Cost of Living vs Cost of Labor",
   description: "Understand why local living costs and local salaries do not move together, and how to use both when evaluating a job offer or remote-pay adjustment.",
   alternates: { canonical: path },
-  openGraph: { type: "article", title: "Cost of Living vs Cost of Labor", description: "Why an expensive city does not automatically produce an equal salary increase, and how to evaluate the gap.", url: path, images: [{ url: "/images/guides/cost-of-living-vs-labor.jpg", width: 1536, height: 1024, alt: "Household expenses and employer compensation shown as separate measures" }] },
+  ...getSocialMetadata({
+    type: "article",
+    title: "Cost of Living vs Cost of Labor",
+    description: "Why an expensive city does not automatically produce an equal salary increase, and how to evaluate the gap.",
+    path,
+    image: { url: "/images/guides/cost-of-living-vs-labor.jpg", width: 1536, height: 1024, alt: "Household expenses and employer compensation shown as separate measures" },
+  }),
 }
 
 export default function CostOfLaborGuidePage() {
@@ -28,9 +35,8 @@ export default function CostOfLaborGuidePage() {
     <main className="research-page">
       <SiteHeader />
       <StructuredData data={[
-        { "@context": "https://schema.org", "@type": "Article", headline: "Cost of Living vs Cost of Labor", description: metadata.description, image: "https://livingcostcomparison.com/images/guides/cost-of-living-vs-labor.jpg", datePublished: "2026-09-22", dateModified: "2026-09-22", author: { "@type": "Organization", name: "Living Cost Comparison" }, publisher: { "@type": "Organization", name: "Living Cost Comparison" }, mainEntityOfPage: `https://livingcostcomparison.com${path}` },
+        { "@context": "https://schema.org", "@type": "Article", headline: "Cost of Living vs Cost of Labor", description: metadata.description, image: "https://livingcostcomparison.com/images/guides/cost-of-living-vs-labor.jpg", datePublished: "2026-09-22T00:00:00Z", dateModified: "2026-09-23T00:00:00Z", author: { "@type": "Organization", name: "Living Cost Comparison", url: "https://livingcostcomparison.com/about" }, publisher: { "@type": "Organization", name: "Living Cost Comparison", url: "https://livingcostcomparison.com/" }, mainEntityOfPage: `https://livingcostcomparison.com${path}` },
         { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: "https://livingcostcomparison.com/" }, { "@type": "ListItem", position: 2, name: "Guides", item: "https://livingcostcomparison.com/guides" }, { "@type": "ListItem", position: 3, name: "Cost of living vs cost of labor", item: `https://livingcostcomparison.com${path}` }] },
-        { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map(([question, answer]) => ({ "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer } })) },
       ]} />
 
       <header className="research-mast labor-guide-mast">

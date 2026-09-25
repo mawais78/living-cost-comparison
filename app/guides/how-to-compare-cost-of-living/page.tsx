@@ -7,6 +7,7 @@ import { GuideRail } from "@/components/guide-rail"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import { StructuredData } from "@/components/structured-data"
+import { getSocialMetadata } from "@/lib/seo"
 
 const path = "/guides/how-to-compare-cost-of-living"
 
@@ -14,7 +15,12 @@ export const metadata: Metadata = {
   title: "How to Compare Cost of Living",
   description: "A practical, research-based method for comparing city costs, including housing, household budgets, price indexes, currencies and data quality.",
   alternates: { canonical: path },
-  openGraph: { type: "article", title: "How to Compare Cost of Living Between Cities", description: "Use a like-for-like basket, household-specific weights and a consistent method to compare two cities properly.", url: path, images: [{ url: "/images/guides/compare-cost-of-living.jpg", width: 1536, height: 1024, alt: "Planning materials for comparing household costs between two cities" }] },
+  ...getSocialMetadata({
+    type: "article",
+    title: "How to Compare Cost of Living Between Cities",
+    description: "Use a like-for-like basket, household-specific weights and a consistent method to compare two cities properly.",
+    path,
+  }),
 }
 
 const faqs = [
@@ -29,9 +35,8 @@ export default function CompareCostGuidePage() {
     <main className="research-page">
       <SiteHeader />
       <StructuredData data={[
-        { "@context": "https://schema.org", "@type": "Article", headline: "How to Compare Cost of Living Between Cities", description: metadata.description, image: "https://livingcostcomparison.com/images/guides/compare-cost-of-living.jpg", datePublished: "2026-09-22", dateModified: "2026-09-22", author: { "@type": "Organization", name: "Living Cost Comparison" }, publisher: { "@type": "Organization", name: "Living Cost Comparison" }, mainEntityOfPage: `https://livingcostcomparison.com${path}` },
+        { "@context": "https://schema.org", "@type": "Article", headline: "How to Compare Cost of Living Between Cities", description: metadata.description, image: "https://livingcostcomparison.com/images/guides/compare-cost-of-living.jpg", datePublished: "2026-09-22T00:00:00Z", dateModified: "2026-09-23T00:00:00Z", author: { "@type": "Organization", name: "Living Cost Comparison", url: "https://livingcostcomparison.com/about" }, publisher: { "@type": "Organization", name: "Living Cost Comparison", url: "https://livingcostcomparison.com/" }, mainEntityOfPage: `https://livingcostcomparison.com${path}` },
         { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: "https://livingcostcomparison.com/" }, { "@type": "ListItem", position: 2, name: "Guides", item: "https://livingcostcomparison.com/guides" }, { "@type": "ListItem", position: 3, name: "How to compare cost of living", item: `https://livingcostcomparison.com${path}` }] },
-        { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map(([question, answer]) => ({ "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer } })) },
       ]} />
 
       <header className="research-mast">

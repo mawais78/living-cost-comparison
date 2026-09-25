@@ -8,7 +8,8 @@ import { ComparisonWorkspace } from "@/components/comparison-workspace"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import { StructuredData } from "@/components/structured-data"
-import { cities, costCategories, getCanonicalComparisonPath, getCityDisplayName, getIndexableComparisonPairs, getMonthlyCost, isIndexableComparison } from "@/lib/cost-data"
+import { cities, costCategories, getCanonicalComparisonPath, getCityDisplayName, getCitySeoName, getIndexableComparisonPairs, getMonthlyCost, isIndexableComparison } from "@/lib/cost-data"
+import { getSocialMetadata } from "@/lib/seo"
 
 type Props = { params: Promise<{ pair: string }> }
 const formatUsd = (value: number) => `$${value.toLocaleString("en-US")}`
@@ -35,19 +36,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const citiesPair = resolvePair(pair)
   if (!citiesPair) return { title: "City comparison" }
   const { from, to } = citiesPair
-  const fromName = getCityDisplayName(from)
-  const toName = getCityDisplayName(to)
+  const fromName = getCitySeoName(from)
+  const toName = getCitySeoName(to)
+  const canonicalPath = getCanonicalComparisonPath(from.slug, to.slug)
+  const title = `${fromName} vs ${toName} Cost of Living`
+  const description = `Compare living costs in ${fromName} and ${toName}, including monthly budgets, category differences and equivalent take-home pay.`
   return {
-    title: `${fromName} vs ${toName} Cost of Living`,
-    description: `Compare ${fromName} and ${toName} with a like-for-like monthly budget, category differences, household scenarios and equivalent take-home salary guidance.`,
-    alternates: { canonical: getCanonicalComparisonPath(from.slug, to.slug) },
+    title: { absolute: title },
+    description,
+    alternates: { canonical: canonicalPath },
     robots: isIndexableComparison(from.slug, to.slug) ? { index: true, follow: true } : { index: false, follow: true },
-    openGraph: {
-      type: "article",
-      title: `${fromName} vs ${toName} Cost of Living`,
-      description: `See how housing, food, transport and other recurring costs compare between ${fromName} and ${toName}.`,
-      url: getCanonicalComparisonPath(from.slug, to.slug),
-    },
+    ...getSocialMetadata({ title, description, path: canonicalPath, type: "article" }),
   }
 }
 
@@ -108,7 +107,6 @@ export default async function ComparisonPage({ params }: Props) {
       <StructuredData data={[
         { "@context": "https://schema.org", "@type": "WebPage", name: pairTitle, description: `Compare estimated monthly living costs in ${fromName} and ${toName}, including category pressure, salary translation and household scenarios.`, dateModified: "2026-09-24", about: [{ "@type": "Place", name: fromName }, { "@type": "Place", name: toName }] },
         { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: "https://livingcostcomparison.com/" }, { "@type": "ListItem", position: 2, name: "Compare cities", item: "https://livingcostcomparison.com/compare-cities" }, { "@type": "ListItem", position: 3, name: `${fromName} vs ${toName}`, item: `https://livingcostcomparison.com${getCanonicalComparisonPath(from.slug, to.slug)}` }] },
-        { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map(([question, answer]) => ({ "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer } })) },
       ]} />
       <SiteHeader />
 

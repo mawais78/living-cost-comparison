@@ -7,14 +7,29 @@ import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import { StructuredData } from "@/components/structured-data"
 import { cities, costCategories, dataEdition, getMonthlyCost } from "@/lib/cost-data"
+import { getSocialMetadata } from "@/lib/seo"
 
 export const metadata: Metadata = {
   title: "Cost of Living Index by City",
   description: `Compare cost-of-living estimates across ${cities.length} major cities, search and sort monthly budgets, and interpret an index normalized to London = 100.`,
   alternates: { canonical: "/cost-of-living-index" },
+  ...getSocialMetadata({
+    title: "Cost of Living Index by City",
+    description: `Search and compare monthly living-cost estimates across ${cities.length} cities, normalized to London = 100.`,
+    path: "/cost-of-living-index",
+  }),
 }
 
 const totals = cities.map((city) => getMonthlyCost(city, "single", "balanced"))
+const countrySlug = (country: string) => country.toLowerCase().replaceAll(" ", "-")
+const cityDirectory = Array.from(cities.reduce((groups, city) => {
+  const countryCities = groups.get(city.country) ?? []
+  countryCities.push(city)
+  groups.set(city.country, countryCities)
+  return groups
+}, new Map<string, typeof cities>()))
+  .map(([country, countryCities]) => [country, countryCities.sort((a, b) => a.city.localeCompare(b.city))] as const)
+  .sort(([a], [b]) => a.localeCompare(b))
 
 export default function CostOfLivingIndexPage() {
   return (
@@ -31,6 +46,23 @@ export default function CostOfLivingIndexPage() {
 
       <section className="city-index-data">
         <div className="page-shell"><div className="city-index-data-head"><div><span>City explorer</span><h2>Cost-of-living ranking</h2></div><p>{dataEdition} · USD equivalent · one person · balanced lifestyle</p></div><CityIndexExplorer /></div>
+      </section>
+
+      <section className="index-directory-section" aria-labelledby="city-directory-title">
+        <div className="page-shell">
+          <header className="index-directory-header"><div><p className="eyebrow">City directory</p><h2 id="city-directory-title">Browse every city guide by country.</h2></div><p>Open a server-rendered guide for the full budget, category detail and planning assumptions.</p></header>
+          <details className="index-directory-more">
+            <summary>Browse all {cities.length} city guides</summary>
+            <div className="index-directory-grid">
+              {cityDirectory.map(([country, countryCities]) => (
+                <section className="index-country-group" key={country}>
+                  <h3>{country}</h3>
+                  <div>{countryCities.map((city) => <Link key={city.slug} href={`/cost-of-living/${countrySlug(country)}/${city.slug}`}>{city.city}{city.region ? `, ${city.region}` : ""}</Link>)}</div>
+                </section>
+              ))}
+            </div>
+          </details>
+        </div>
       </section>
 
       <section className="index-definition">

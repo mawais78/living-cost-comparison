@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import { StructuredData } from "@/components/structured-data"
+import { getSocialMetadata } from "@/lib/seo"
 
 const path = "/guides"
 
@@ -46,12 +47,11 @@ export const metadata: Metadata = {
   title: "Cost of Living and Relocation Guides",
   description: "Practical guides for comparing city costs, calculating an equivalent salary and evaluating relocation offers with the right assumptions.",
   alternates: { canonical: path },
-  openGraph: {
-    type: "website",
+  ...getSocialMetadata({
     title: "Cost of Living and Relocation Guides",
     description: "Understand city costs, salary targets and relocation trade-offs before making a move.",
-    url: path,
-  },
+    path,
+  }),
 }
 
 export default function GuidesPage() {

@@ -9,12 +9,18 @@ import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import { StructuredData } from "@/components/structured-data"
 import { cities, getCanonicalComparisonPath, getCity, getCityDisplayName, getMonthlyCost } from "@/lib/cost-data"
+import { getSocialMetadata } from "@/lib/seo"
 import heroImage from "@/public/images/guides/compare-cost-of-living.jpg"
 
 export const metadata: Metadata = {
   title: { absolute: "Cost of Living Comparison: Cities & Salaries" },
   description: "Compare cost of living between cities, estimate the take-home salary needed after moving, and inspect the budget assumptions behind the result.",
   alternates: { canonical: "/" },
+  ...getSocialMetadata({
+    title: "Cost of Living Comparison: Cities & Salaries",
+    description: "Compare city costs, estimate equivalent take-home pay and inspect the assumptions behind a relocation budget.",
+    path: "/",
+  }),
 }
 
 const ranked = cities.map((city) => ({ city, total: getMonthlyCost(city, "single", "balanced") })).sort((a, b) => b.total - a.total)
@@ -66,7 +72,6 @@ export default function Home() {
         { "@context": "https://schema.org", "@type": "WebSite", name: "Living Cost Comparison", alternateName: "LivingCostComparison.com", url: "https://livingcostcomparison.com/", description: metadata.description },
         { "@context": "https://schema.org", "@type": "Organization", name: "Living Cost Comparison", url: "https://livingcostcomparison.com/", logo: "https://livingcostcomparison.com/brand/logo-mark.svg" },
         { "@context": "https://schema.org", "@type": "ItemList", name: "Popular city cost comparisons", itemListElement: featuredComparisons.map((comparison, index) => ({ "@type": "ListItem", position: index + 1, name: `${comparison.fromName} vs ${comparison.toName} cost of living`, url: `https://livingcostcomparison.com${comparison.href}` })) },
-        { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map(([question, answer]) => ({ "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer } })) },
       ]} />
       <SiteHeader />
 

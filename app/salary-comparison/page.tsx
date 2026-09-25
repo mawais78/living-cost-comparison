@@ -7,11 +7,17 @@ import { SalaryCalculator } from "@/components/salary-calculator"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import { StructuredData } from "@/components/structured-data"
+import { getSocialMetadata } from "@/lib/seo"
 
 export const metadata: Metadata = {
   title: "Equivalent Salary Calculator",
   description: "Estimate the take-home salary needed after moving cities, then check taxes, benefits, market pay and relocation costs before evaluating an offer.",
   alternates: { canonical: "/salary-comparison" },
+  ...getSocialMetadata({
+    title: "Equivalent Salary Calculator",
+    description: "Estimate the take-home pay needed after moving, then review taxes, benefits, market pay and relocation costs.",
+    path: "/salary-comparison",
+  }),
 }
 
 const faqs = [
@@ -63,7 +69,6 @@ export default function SalaryComparisonPage() {
       <SiteHeader />
       <StructuredData data={[
         { "@context": "https://schema.org", "@type": "WebApplication", name: "Equivalent Salary Calculator", applicationCategory: "FinanceApplication", operatingSystem: "Web", url: "https://livingcostcomparison.com/salary-comparison", description: metadata.description },
-        { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map(([question, answer]) => ({ "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer } })) },
       ]} />
 
       <section className="salary-page-hero">

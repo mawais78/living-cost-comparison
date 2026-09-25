@@ -387,6 +387,16 @@ export function getCityDisplayName(city: CityCost) {
   return [city.city, city.region].filter(Boolean).join(", ")
 }
 
+export function getCitySeoName(city: CityCost) {
+  const normalizedName = city.city.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("en")
+  const hasDuplicateName = cities.some((candidate) => {
+    if (candidate.slug === city.slug) return false
+    return candidate.city.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("en") === normalizedName
+  })
+
+  return hasDuplicateName ? `${city.city}, ${city.country}` : city.city
+}
+
 export function getCityLocation(city: CityCost) {
   return [getCityDisplayName(city), city.country].filter(Boolean).join(", ")
 }

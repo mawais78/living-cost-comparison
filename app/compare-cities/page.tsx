@@ -8,12 +8,18 @@ import { ComparisonWorkspace } from "@/components/comparison-workspace"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import { StructuredData } from "@/components/structured-data"
-import { cities, costCategories, getCanonicalComparisonPath, getLaunchComparisonPairs, getMonthlyCost, getPossibleComparisonCount } from "@/lib/cost-data"
+import { cities, costCategories, getCanonicalComparisonPath, getIndexableComparisonPairs, getMonthlyCost, getPossibleComparisonCount } from "@/lib/cost-data"
+import { getSocialMetadata } from "@/lib/seo"
 
 export const metadata: Metadata = {
   title: "Compare Cost of Living Between Cities",
   description: "Compare living costs between cities using the same household, lifestyle and income. See category differences, equivalent salary and assumptions.",
   alternates: { canonical: "/compare-cities" },
+  ...getSocialMetadata({
+    title: "Compare Cost of Living Between Cities",
+    description: "Compare monthly city budgets, category differences and equivalent take-home pay using the same household assumptions.",
+    path: "/compare-cities",
+  }),
 }
 
 const faqs = [
@@ -23,7 +29,7 @@ const faqs = [
   ["Are taxes part of cost of living?", "We keep taxes separate from the living-cost basket. Taxes determine how gross salary becomes take-home pay and require household- and jurisdiction-specific rules."],
 ]
 
-const pairs = getLaunchComparisonPairs().map(({ from, to }) => {
+const pairs = getIndexableComparisonPairs().map(({ from, to }) => {
   const fromTotal = getMonthlyCost(from, "single", "balanced")
   const toTotal = getMonthlyCost(to, "single", "balanced")
   return {
@@ -33,6 +39,8 @@ const pairs = getLaunchComparisonPairs().map(({ from, to }) => {
     direction: toTotal > fromTotal ? "higher" : "lower",
   }
 })
+const featuredPairs = pairs.slice(0, 6)
+const remainingPairs = pairs.slice(6)
 
 function PairCard({ pair, index }: { pair: (typeof pairs)[number]; index: number }) {
   return (
@@ -51,7 +59,6 @@ export default function CompareCitiesPage() {
       <SiteHeader />
       <StructuredData data={[
         { "@context": "https://schema.org", "@type": "WebApplication", name: "City Cost of Living Comparison", applicationCategory: "FinanceApplication", operatingSystem: "Web", url: "https://livingcostcomparison.com/compare-cities", description: metadata.description, isAccessibleForFree: true },
-        { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map(([question, answer]) => ({ "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer } })) },
       ]} />
 
       <header className="compare-intro">
@@ -106,7 +113,13 @@ export default function CompareCitiesPage() {
             <div><p className="eyebrow">Example comparisons</p><h2>Open a city pair directly.</h2></div>
             <p>These examples are a starting point. Search any of the {cities.length} cities in the workspace above to build the comparison that fits your move.</p>
           </header>
-          <div className="compare-pair-grid">{pairs.map((pair, index) => <PairCard key={`${pair.from.slug}-${pair.to.slug}`} pair={pair} index={index} />)}</div>
+          <div className="compare-pair-grid">{featuredPairs.map((pair, index) => <PairCard key={`${pair.from.slug}-${pair.to.slug}`} pair={pair} index={index} />)}</div>
+          {remainingPairs.length > 0 && (
+            <details className="compare-pair-more">
+              <summary>Browse all {pairs.length} indexed comparisons</summary>
+              <div className="compare-pair-grid">{remainingPairs.map((pair, index) => <PairCard key={`${pair.from.slug}-${pair.to.slug}`} pair={pair} index={index + featuredPairs.length} />)}</div>
+            </details>
+          )}
         </div>
       </section>
 

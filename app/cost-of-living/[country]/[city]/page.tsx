@@ -7,7 +7,8 @@ import { AnimatedFaqList } from "@/components/animated-faq"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import { StructuredData } from "@/components/structured-data"
-import { cities, costCategories, getCanonicalComparisonPath, getCityDisplayName, getCityLocation, getMonthlyCost, type CostCategory } from "@/lib/cost-data"
+import { cities, costCategories, getCanonicalComparisonPath, getCityDisplayName, getCityLocation, getCitySeoName, getMonthlyCost, type CostCategory } from "@/lib/cost-data"
+import { getSocialMetadata } from "@/lib/seo"
 
 type Props = { params: Promise<{ country: string; city: string }> }
 const countrySlug = (country: string) => country.toLowerCase().replaceAll(" ", "-")
@@ -40,18 +41,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const values = await params
   const city = cities.find((item) => item.slug === values.city && countrySlug(item.country) === values.country)
   if (!city) return { title: "Cost of living" }
-  const displayName = getCityDisplayName(city)
+  const displayName = getCitySeoName(city)
   const total = getMonthlyCost(city, "single", "balanced")
+  const canonicalPath = `/cost-of-living/${values.country}/${values.city}`
+  const title = `Cost of Living in ${displayName}`
+  const description = `Estimate monthly living costs in ${displayName}, including housing, food, transport, utilities and household budget scenarios.`
   return {
-    title: `Cost of Living in ${displayName}`,
-    description: `See the estimated cost of living in ${displayName}: monthly housing, food, transport, utilities and lifestyle costs, household scenarios and practical relocation planning guidance.`,
-    alternates: { canonical: `/cost-of-living/${values.country}/${values.city}` },
-    openGraph: {
+    title: { absolute: title },
+    description,
+    alternates: { canonical: canonicalPath },
+    ...getSocialMetadata({
+      title,
+      description: `A one-person balanced budget in ${displayName} is estimated at ${formatUsd(total)} per month. Explore the breakdown.`,
+      path: canonicalPath,
       type: "article",
-      title: `Cost of Living in ${displayName}`,
-      description: `A one-person balanced budget in ${displayName} is estimated at ${formatUsd(total)} per month. Explore the category breakdown and household scenarios.`,
-      url: `/cost-of-living/${values.country}/${values.city}`,
-    },
+    }),
   }
 }
 
@@ -96,7 +100,6 @@ export default async function CityPage({ params }: Props) {
       <StructuredData data={[
         { "@context": "https://schema.org", "@type": "WebPage", name: `Cost of living in ${displayName}`, description: `Estimated monthly living costs in ${locationName}, with category detail, household scenarios and relocation planning guidance.`, dateModified: "2026-09-24", about: { "@type": "Place", name: locationName } },
         { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: "https://livingcostcomparison.com/" }, { "@type": "ListItem", position: 2, name: "Cost of living", item: "https://livingcostcomparison.com/cost-of-living-index" }, { "@type": "ListItem", position: 3, name: displayName, item: `https://livingcostcomparison.com/cost-of-living/${values.country}/${values.city}` }] },
-        { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map(([question, answer]) => ({ "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer } })) },
       ]} />
       <SiteHeader />
 

@@ -6,12 +6,18 @@ import Image from "next/image"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import { StructuredData } from "@/components/structured-data"
-import { cities, costCategories } from "@/lib/cost-data"
+import { cities, costCategories, dataEdition } from "@/lib/cost-data"
+import { getSocialMetadata } from "@/lib/seo"
 
 export const metadata: Metadata = {
   title: "Cost of Living Comparison Methodology",
   description: "See how Living Cost Comparison turns city costs, household choices and income into a consistent monthly budget and equivalent-salary estimate.",
   alternates: { canonical: "/methodology" },
+  ...getSocialMetadata({
+    title: "Cost of Living Comparison Methodology",
+    description: "See how city estimates become comparable monthly budgets and equivalent-income planning figures.",
+    path: "/methodology",
+  }),
 }
 
 const steps = [
@@ -34,7 +40,7 @@ export default function MethodologyPage() {
     <main className="methodology-page method2-page">
       <SiteHeader />
       <StructuredData data={[
-        { "@context": "https://schema.org", "@type": "TechArticle", headline: "Living Cost Comparison methodology", description: metadata.description, datePublished: "2026-09-18", dateModified: "2026-09-23", author: { "@type": "Organization", name: "Living Cost Comparison" }, publisher: { "@type": "Organization", name: "Living Cost Comparison" }, mainEntityOfPage: "https://livingcostcomparison.com/methodology" },
+        { "@context": "https://schema.org", "@type": "TechArticle", headline: "Living Cost Comparison methodology", description: metadata.description, datePublished: "2026-09-18T00:00:00Z", dateModified: "2026-09-23T00:00:00Z", author: { "@type": "Organization", name: "Living Cost Comparison", url: "https://livingcostcomparison.com/about" }, publisher: { "@type": "Organization", name: "Living Cost Comparison", url: "https://livingcostcomparison.com/" }, mainEntityOfPage: "https://livingcostcomparison.com/methodology" },
         { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: "https://livingcostcomparison.com/" }, { "@type": "ListItem", position: 2, name: "Methodology", item: "https://livingcostcomparison.com/methodology" }] },
       ]} />
 
@@ -156,6 +162,10 @@ export default function MethodologyPage() {
               </ul>
             </aside>
           </div>
+          <aside className="method2-provenance">
+            <div><span className="method2-reference-label">Current data provenance</span><h3>A consistent planning model, not a live price feed.</h3></div>
+            <div><p>The {dataEdition} edition uses rounded USD-equivalent estimates maintained by Living Cost Comparison. Every city uses the same category structure so places can be compared consistently.</p><p>Individual values do not currently include provider-level citations or live exchange-rate timestamps. Treat them as orientation, then validate rent, transport, utilities, healthcare and other material costs with current local primary sources before making a financial commitment.</p></div>
+          </aside>
         </div>
       </section>
 

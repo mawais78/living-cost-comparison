@@ -3565,3 +3565,90 @@ main, section, header, footer { min-width: 0; max-width: 100%; }
   .home-cost-driver-note { padding: 18px; }
   .home-relocation-ledger article { padding-inline: 18px; }
 }
+
+/* Crawlable page directories and transparent methodology notes. */
+.index-directory-section {
+  padding-block: 88px;
+  border-top: 1px solid var(--line);
+  background: var(--porcelain);
+}
+.index-directory-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, .62fr);
+  gap: 56px;
+  align-items: end;
+}
+.index-directory-header h2 {
+  max-width: 680px;
+  margin-top: 12px;
+  color: var(--brand-ink);
+  font-size: clamp(2.25rem, 4vw, 3.8rem);
+  font-weight: 700;
+  letter-spacing: -.055em;
+  line-height: 1;
+}
+.index-directory-header > p { color: var(--muted-ink); line-height: 1.72; }
+.index-directory-more { margin-top: 34px; }
+.index-directory-more > summary {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  padding: 12px 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: 9px;
+  background: #fff;
+  color: var(--brand-ink);
+  cursor: pointer;
+  font-size: .78rem;
+  font-weight: 760;
+  list-style: none;
+}
+.index-directory-more > summary::-webkit-details-marker { display: none; }
+.index-directory-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 24px;
+}
+.index-country-group {
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+}
+.index-country-group h3 { color: var(--brand-ink); font-size: 1rem; }
+.index-country-group > div { display: grid; gap: 7px; margin-top: 14px; }
+.index-country-group a { color: var(--brand-blue); font-size: .82rem; line-height: 1.45; text-decoration: none; }
+.index-country-group a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+.method2-provenance {
+  display: grid;
+  grid-template-columns: minmax(240px, .72fr) minmax(0, 1.28fr);
+  gap: 48px;
+  margin-top: 32px;
+  padding: 30px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fff;
+}
+.method2-provenance h3 { max-width: 420px; color: var(--brand-ink); font-size: 1.45rem; line-height: 1.2; }
+.method2-provenance > div:last-child { display: grid; gap: 14px; color: var(--muted-ink); line-height: 1.72; }
+
+.not-found-panel { min-height: 62vh; padding-block: 112px; background: var(--porcelain); }
+.not-found-panel h1 { max-width: 800px; margin-top: 15px; color: var(--brand-ink); font-size: clamp(2.8rem, 6vw, 5.7rem); letter-spacing: -.065em; line-height: .94; }
+.not-found-panel > .page-shell > p:not(.eyebrow) { max-width: 620px; margin-top: 24px; color: var(--muted-ink); font-size: 1.05rem; line-height: 1.7; }
+.not-found-panel .page-shell > div { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px; }
+.not-found-panel a { display: inline-flex; align-items: center; gap: 8px; padding: 12px 17px; border: 1px solid var(--brand-ink); border-radius: 9px; color: var(--brand-ink); font-size: .82rem; font-weight: 760; text-decoration: none; }
+.not-found-panel a:first-child { background: var(--brand-ink); color: var(--porcelain); }
+.not-found-panel svg { width: 15px; height: 15px; }
+
+@media (max-width: 900px) {
+  .index-directory-header, .method2-provenance { grid-template-columns: 1fr; gap: 24px; }
+  .index-directory-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 620px) {
+  .index-directory-section, .not-found-panel { padding-block: 66px; }
+  .index-directory-grid { grid-template-columns: 1fr; }
+  .method2-provenance { padding: 22px; }
+}

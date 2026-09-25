@@ -4,11 +4,17 @@ import Link from "next/link"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import { StructuredData } from "@/components/structured-data"
+import { getSocialMetadata } from "@/lib/seo"
 
 export const metadata: Metadata = {
   title: "About Living Cost Comparison",
   description: "Why Living Cost Comparison exists and how its calculators, guides and city estimates help people plan a move or evaluate a salary.",
   alternates: { canonical: "/about" },
+  ...getSocialMetadata({
+    title: "About Living Cost Comparison",
+    description: "Learn how our calculators, guides and city estimates help people plan a move and evaluate salary offers.",
+    path: "/about",
+  }),
 }
 
 export default function AboutPage() {

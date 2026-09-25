@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next"
 import { SiteMotion } from "@/components/site-motion"
+import { getSocialMetadata } from "@/lib/seo"
 import "./globals.css"
 
 export const metadata: Metadata = {
@@ -12,15 +13,11 @@ export const metadata: Metadata = {
   authors: [{ name: "Living Cost Comparison" }],
   creator: "Living Cost Comparison",
   publisher: "Living Cost Comparison",
-  robots: { index: true, follow: true },
-  openGraph: {
-    type: "website",
-    siteName: "Living Cost Comparison",
+  ...getSocialMetadata({
     title: "Cost of Living Comparison: Cities, Budgets & Salaries",
     description: "Compare city costs, translate salary and inspect the assumptions behind a relocation budget.",
-    url: "https://livingcostcomparison.com",
-  },
-  twitter: { card: "summary", title: "Living Cost Comparison", description: "Compare city costs, budgets and equivalent salaries." },
+    path: "/",
+  }),
   manifest: "/site.webmanifest",
   icons: {
     icon: [
