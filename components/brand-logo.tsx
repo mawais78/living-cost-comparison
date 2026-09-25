@@ -4,7 +4,7 @@ import Link from "next/link"
 export function LogoMark({ reversed = false, className = "" }: { reversed?: boolean; className?: string }) {
   return (
     <Image
-      src="/brand/logo-monogram.png"
+      src="/brand/logo-monogram.svg"
       alt=""
       width={517}
       height={426}
@@ -18,10 +18,10 @@ export function BrandLogo({ reversed = false, compact = false }: { reversed?: bo
   return (
     <Link href="/" className={`brand-logo${reversed ? " brand-logo-reversed" : ""}`} aria-label="Living Cost Comparison home">
       {compact ? <LogoMark reversed={reversed} className="brand-logo-mark" /> : <Image
-        src="/brand/logo-lockup.png"
+        src="/brand/logo-lockup.svg"
         alt=""
-        width={1444}
-        height={426}
+        width={440}
+        height={100}
         className="brand-logo-lockup"
         unoptimized
       />}

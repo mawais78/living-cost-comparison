@@ -9,6 +9,7 @@ import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import { StructuredData } from "@/components/structured-data"
 import { cities, getCanonicalComparisonPath, getCity, getCityDisplayName, getMonthlyCost } from "@/lib/cost-data"
+import heroImage from "@/public/images/guides/compare-cost-of-living.jpg"
 
 export const metadata: Metadata = {
   title: { absolute: "Cost of Living Comparison: Cities & Salaries" },
@@ -70,6 +71,16 @@ export default function Home() {
       <SiteHeader />
 
       <section className="landing-hero">
+        <Image
+          className="landing-hero-image"
+          src={heroImage}
+          alt=""
+          fill
+          priority
+          fetchPriority="high"
+          quality={55}
+          sizes="100vw"
+        />
         <div className="page-shell landing-hero-grid">
           <div className="landing-hero-copy">
             <p className="eyebrow">Cost of living comparison</p>

@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation"
 
 const revealSelector = [
   "main > header:not(.site-header)",
-  "main > section",
+  "main > section:not(.landing-hero)",
   "main > footer",
   ".research-article > section",
   ".method-article > section",

@@ -1418,7 +1418,7 @@ a, button, input, select, summary { outline-color: var(--brand-blue); outline-of
 
 /* Home */
 .landing-hero { position: relative; isolation: isolate; overflow: hidden; padding-block: 78px 82px; border-color: var(--line); background: var(--warm-field); }
-.landing-hero::before { position: absolute; z-index: -2; inset: 0; background: url("/images/guides/compare-cost-of-living.jpg") 66% center / cover no-repeat; content: ""; }
+.landing-hero-image { z-index: -2; object-fit: cover; object-position: 66% center; }
 .landing-hero::after { position: absolute; z-index: -1; inset: 0; background: linear-gradient(90deg, rgb(243 241 235 / 98%) 0%, rgb(243 241 235 / 91%) 42%, rgb(243 241 235 / 54%) 72%, rgb(243 241 235 / 30%) 100%), rgb(39 48 44 / 24%); content: ""; }
 .landing-hero-grid { position: relative; z-index: 1; grid-template-columns: minmax(0, 1.08fr) minmax(360px, .78fr); gap: 76px; }
 .landing-hero-copy h1 { max-width: 680px; margin-top: 18px; font-size: clamp(3.3rem, 6vw, 5.5rem); font-weight: 650; letter-spacing: -.058em; line-height: .96; }
@@ -1615,7 +1615,7 @@ a, button, input, select, summary { outline-color: var(--brand-blue); outline-of
 
 @media (max-width: 960px) {
   .landing-hero-grid, .landing-spectrum-grid, .landing-guide-grid { grid-template-columns: 1fr; gap: 44px; }
-  .landing-hero::before { background-position: center; }
+  .landing-hero-image { object-position: center; }
   .landing-hero::after { background: linear-gradient(rgb(243 241 235 / 80%), rgb(243 241 235 / 80%)), rgb(39 48 44 / 24%); }
   .landing-hero-copy { max-width: 760px; }
   .home-launcher { max-width: 620px; }
@@ -1872,14 +1872,14 @@ main, section, header, footer { min-width: 0; max-width: 100%; }
 .home-answer-grid header .eyebrow, .home-method-section-rich .eyebrow, .home-guides-section .eyebrow, .home-transparency-section .eyebrow { color: var(--brand-blue); }
 .home-answer-grid h2, .home-method-section-rich h2, .home-guides-section h2, .home-transparency-section h2 { max-width: 600px; margin-top: 13px; font-size: clamp(2.2rem, 4vw, 3.55rem); font-weight: 700; letter-spacing: -.05em; line-height: 1; }
 .home-answer-grid > header { display: flex; min-height: 100%; flex-direction: column; justify-content: flex-start; padding: 34px 32px 38px; }
-.home-answer-grid > header .eyebrow { color: var(--brand-sage); }
+.home-answer-grid > header .eyebrow { color: #b8c3bd; }
 .home-answer-grid > header h2 { max-width: 390px; color: var(--porcelain); }
 .home-answer-cards { display: grid; overflow: hidden; border-radius: 18px; background: var(--porcelain); }
 .home-answer-grid .home-answer-cards article { display: grid; grid-template-columns: 58px minmax(0, 1fr); gap: 24px; min-height: 184px; padding: 28px 30px 30px 26px; background: transparent; transition: background-color 180ms ease; }
 .home-answer-grid .home-answer-cards article + article { border-top: 1px solid var(--line); }
 .home-answer-grid .home-answer-cards article:has(a:hover) { background: var(--mist); }
 .home-answer-marker { display: flex; flex-direction: column; gap: 19px; align-items: center; }
-.home-answer-marker span { color: var(--brand-sage); font: 700 .7rem var(--font-mono); letter-spacing: .05em; }
+.home-answer-marker span { color: var(--brand-forest); font: 700 .7rem var(--font-mono); letter-spacing: .05em; }
 .home-answer-marker svg { width: 50px; height: 50px; padding: 14px; border-radius: 50%; background: var(--mist); color: var(--brand-forest); stroke-width: 1.65; }
 .home-answer-copy { align-self: center; }
 .home-answer-grid article h3 { max-width: 520px; color: var(--brand-ink); font-size: 1.18rem; font-weight: 750; line-height: 1.35; }
