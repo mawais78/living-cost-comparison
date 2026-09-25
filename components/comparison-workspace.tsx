@@ -5,14 +5,24 @@ import { ArrowDownRight, ArrowRight, ArrowRightLeft, ArrowUpRight } from "lucide
 import Link from "next/link"
 
 import { Button } from "@/components/ui/button"
-import { CityCombobox } from "@/components/city-combobox"
 import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { cities, costCategories, defaultComparison, getCanonicalComparisonPath, getCity, getMonthlyCost, householdMultipliers, lifestyleMultipliers } from "@/lib/cost-data"
+import { cities, costCategories, defaultComparison, getCanonicalComparisonPath, getCity, getCityLocation, getMonthlyCost, householdMultipliers, lifestyleMultipliers } from "@/lib/cost-data"
 
 type Household = keyof typeof householdMultipliers
 type Lifestyle = keyof typeof lifestyleMultipliers
 const money = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 })
+const cityOptions = [...cities].sort((first, second) => first.city.localeCompare(second.city))
+
+function CitySelect({ label, value, onValueChange, disabledSlug }: { label: string; value: string; onValueChange: (value: string) => void; disabledSlug?: string }) {
+  return (
+    <label className="city-picker city-picker-studio">
+      <span className="city-picker-label">{label}</span>
+      <select className="city-picker-control studio-native-select" value={value} onChange={(event) => onValueChange(event.target.value)}>
+        {cityOptions.map((city) => <option key={city.slug} value={city.slug} disabled={city.slug === disabledSlug}>{getCityLocation(city)}</option>)}
+      </select>
+    </label>
+  )
+}
 
 function CostCell({ value, max, tone, label }: { value: number; max: number; tone: "origin" | "destination"; label: string }) {
   return (
@@ -116,19 +126,19 @@ export function ComparisonWorkspace({ initialFrom = defaultComparison.from, init
         </div>
 
         <div className="studio-city-fields">
-          <CityCombobox label="Current city" value={fromSlug} onValueChange={setFromSlug} disabledSlug={toSlug} />
+          <CitySelect label="Current city" value={fromSlug} onValueChange={setFromSlug} disabledSlug={toSlug} />
           <Button type="button" variant="outline" className="studio-swap" onClick={swap} aria-label="Swap cities"><ArrowRightLeft className="size-4" /> Swap cities</Button>
-          <CityCombobox label="Comparison city" value={toSlug} onValueChange={setToSlug} disabledSlug={fromSlug} />
+          <CitySelect label="Comparison city" value={toSlug} onValueChange={setToSlug} disabledSlug={fromSlug} />
         </div>
 
         <div className="studio-assumptions">
           <label className="studio-field">
             <span className="field-label">Household</span>
-            <Select value={household} onValueChange={(next) => next && setHousehold(next as Household)}><SelectTrigger className="w-full bg-white"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="single">1 person</SelectItem><SelectItem value="couple">Couple</SelectItem><SelectItem value="family">Family of 4</SelectItem></SelectContent></Select>
+            <select className="studio-native-select" value={household} onChange={(event) => setHousehold(event.target.value as Household)}><option value="single">1 person</option><option value="couple">Couple</option><option value="family">Family of 4</option></select>
           </label>
           <label className="studio-field">
             <span className="field-label">Lifestyle</span>
-            <Select value={lifestyle} onValueChange={(next) => next && setLifestyle(next as Lifestyle)}><SelectTrigger className="w-full bg-white"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="lean">Lean</SelectItem><SelectItem value="balanced">Balanced</SelectItem><SelectItem value="comfortable">Comfortable</SelectItem></SelectContent></Select>
+            <select className="studio-native-select" value={lifestyle} onChange={(event) => setLifestyle(event.target.value as Lifestyle)}><option value="lean">Lean</option><option value="balanced">Balanced</option><option value="comfortable">Comfortable</option></select>
           </label>
           <label className="studio-field">
             <span className="field-label">Monthly take-home · USD</span>

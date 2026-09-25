@@ -4,7 +4,7 @@ import { useLayoutEffect, type ReactNode } from "react"
 import { usePathname } from "next/navigation"
 
 const revealSelector = [
-  "main > header:not(.site-header)",
+  "main > header:not(.site-header):not(.compare-intro)",
   "main > section:not(.landing-hero)",
   "main > footer",
   ".research-article > section",

@@ -16,7 +16,7 @@ export function LogoMark({ reversed = false, className = "" }: { reversed?: bool
 
 export function BrandLogo({ reversed = false, compact = false }: { reversed?: boolean; compact?: boolean }) {
   return (
-    <Link href="/" className={`brand-logo${reversed ? " brand-logo-reversed" : ""}`} aria-label="Living Cost Comparison home">
+    <Link href="/" prefetch={false} className={`brand-logo${reversed ? " brand-logo-reversed" : ""}`} aria-label="Living Cost Comparison home">
       {compact ? <LogoMark reversed={reversed} className="brand-logo-mark" /> : <Image
         src="/brand/logo-lockup.svg"
         alt=""

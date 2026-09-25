@@ -56,7 +56,7 @@ export default function CompareCitiesPage() {
 
       <header className="compare-intro">
         <div className="page-shell">
-          <nav className="breadcrumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span>/</span><span>Compare cities</span></nav>
+          <nav className="breadcrumbs" aria-label="Breadcrumb"><Link href="/" prefetch={false}>Home</Link><span>/</span><span>Compare cities</span></nav>
           <div className="compare-intro-grid">
             <div className="compare-intro-copy">
               <p className="eyebrow">Cost of living comparison</p>
