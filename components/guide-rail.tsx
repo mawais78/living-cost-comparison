@@ -9,7 +9,7 @@ const guides = [
 export function GuideRail({ current }: { current: string }) {
   return (
     <aside className="guide-rail" aria-label="Related research guides">
-      <p className="footer-label">Research series</p>
+      <Link className="guide-rail-home" href="/guides"><span>00</span>All guides</Link>
       {guides.map((guide, index) => (
         <Link key={guide.href} href={guide.href} aria-current={guide.href === current ? "page" : undefined}>
           <span>{String(index + 1).padStart(2, "0")}</span>{guide.label}

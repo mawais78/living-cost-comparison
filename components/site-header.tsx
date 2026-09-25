@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { Menu, X } from "lucide-react"
 import { usePathname } from "next/navigation"
@@ -10,16 +11,25 @@ const navigation = [
   { href: "/compare-cities", label: "Compare" },
   { href: "/salary-comparison", label: "Salary" },
   { href: "/cost-of-living-index", label: "City index" },
-  { href: "/guides/how-to-compare-cost-of-living", label: "Guides" },
-  { href: "/methodology", label: "Data" },
+  { href: "/guides", label: "Guides" },
+  { href: "/methodology", label: "Method" },
 ]
 
 export function SiteHeader() {
   const pathname = usePathname()
-  const isActive = (href: string) => pathname === href || (href === "/compare-cities" && pathname.startsWith("/compare/")) || (href.startsWith("/guides/") && pathname.startsWith("/guides/"))
+  const [isScrolled, setIsScrolled] = useState(false)
+  const isActive = (href: string) => pathname === href || (href === "/compare-cities" && pathname.startsWith("/compare/")) || (href === "/guides" && pathname.startsWith("/guides/"))
+
+  useEffect(() => {
+    const updateScrollState = () => setIsScrolled(window.scrollY > 1)
+
+    updateScrollState()
+    window.addEventListener("scroll", updateScrollState, { passive: true })
+    return () => window.removeEventListener("scroll", updateScrollState)
+  }, [pathname])
 
   return (
-    <header className="site-header">
+    <header className={`site-header${isScrolled ? " is-scrolled" : ""}`}>
       <div className="page-shell site-header-inner">
         <BrandLogo />
         <nav className="primary-nav" aria-label="Primary navigation">

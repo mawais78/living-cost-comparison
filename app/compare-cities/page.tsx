@@ -1,13 +1,14 @@
 import type { Metadata } from "next"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, CircleHelp, MapPinned, Scale, ShoppingBasket } from "lucide-react"
+import Image from "next/image"
 import Link from "next/link"
 
+import { AnimatedFaqList } from "@/components/animated-faq"
 import { ComparisonWorkspace } from "@/components/comparison-workspace"
-import { ResearchCitations } from "@/components/research-citations"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import { StructuredData } from "@/components/structured-data"
-import { cities, getComparisonPath, getFeaturedCityPairs, getMonthlyCost, getPossibleComparisonCount } from "@/lib/cost-data"
+import { cities, costCategories, getCanonicalComparisonPath, getLaunchComparisonPairs, getMonthlyCost, getPossibleComparisonCount } from "@/lib/cost-data"
 
 export const metadata: Metadata = {
   title: "Compare Cost of Living Between Cities",
@@ -22,7 +23,7 @@ const faqs = [
   ["Are taxes part of cost of living?", "We keep taxes separate from the living-cost basket. Taxes determine how gross salary becomes take-home pay and require household- and jurisdiction-specific rules."],
 ]
 
-const pairs = getFeaturedCityPairs().map(({ from, to }) => {
+const pairs = getLaunchComparisonPairs().map(({ from, to }) => {
   const fromTotal = getMonthlyCost(from, "single", "balanced")
   const toTotal = getMonthlyCost(to, "single", "balanced")
   return {
@@ -35,7 +36,7 @@ const pairs = getFeaturedCityPairs().map(({ from, to }) => {
 
 function PairCard({ pair, index }: { pair: (typeof pairs)[number]; index: number }) {
   return (
-    <Link className="compare-pair-card" href={getComparisonPath(pair.from.slug, pair.to.slug)}>
+    <Link className="compare-pair-card" href={getCanonicalComparisonPath(pair.from.slug, pair.to.slug)}>
       <span className="compare-pair-number">{String(index + 1).padStart(2, "0")}</span>
       <span className="compare-pair-cities"><strong>{pair.from.city}</strong><i>to</i><strong>{pair.to.city}</strong></span>
       <span className="compare-pair-summary">{pair.to.city} is {pair.percent}% {pair.direction}</span>
@@ -61,7 +62,7 @@ export default function CompareCitiesPage() {
               <p className="eyebrow">Cost of living comparison</p>
               <h1>See what your move changes.</h1>
               <p>Build a like-for-like monthly budget for two cities. Keep the household and lifestyle constant, then inspect the cost difference, spending-equivalent income and categories driving the change.</p>
-              <div className="compare-intro-meta" aria-label="Calculator coverage"><span>{cities.length} cities currently available</span><span>{getPossibleComparisonCount()} possible city pairs</span><span>5 budget categories</span></div>
+              <div className="compare-intro-meta" aria-label="Calculator coverage"><span>{cities.length} major cities</span><span>{getPossibleComparisonCount().toLocaleString("en-US")} possible city pairs</span><span>{costCategories.length} budget categories</span></div>
             </div>
             <aside className="compare-intro-note">
               <span>Start with your real setup</span>
@@ -83,9 +84,18 @@ export default function CompareCitiesPage() {
             <p>Treat the estimate as a planning range. Start with the total, then look at income and the category breakdown.</p>
           </header>
           <div className="compare-how-grid">
-            <article><span>01</span><h3>Monthly budget</h3><p>See the recurring amount your household may spend in each city under the same assumptions.</p></article>
-            <article><span>02</span><h3>Salary target</h3><p>Translate your current take-home pay into an equivalent amount for the destination.</p></article>
-            <article><span>03</span><h3>Category pressure</h3><p>Find whether housing, groceries or another expense is creating most of the difference.</p></article>
+            <article>
+              <figure className="compare-how-image"><Image src="/images/compare-cities/monthly-budget.jpg" alt="" width={1536} height={1024} sizes="(max-width: 680px) calc(100vw - 40px), (max-width: 900px) calc((100vw - 60px) / 2), 380px" /></figure>
+              <div className="compare-how-card-body"><span>01</span><h3>Monthly budget</h3><p>See the recurring amount your household may spend in each city under the same assumptions.</p></div>
+            </article>
+            <article>
+              <figure className="compare-how-image"><Image src="/images/compare-cities/salary-target.jpg" alt="" width={1536} height={1024} sizes="(max-width: 680px) calc(100vw - 40px), (max-width: 900px) calc((100vw - 60px) / 2), 380px" /></figure>
+              <div className="compare-how-card-body"><span>02</span><h3>Salary target</h3><p>Translate your current take-home pay into an equivalent amount for the destination.</p></div>
+            </article>
+            <article>
+              <figure className="compare-how-image"><Image src="/images/compare-cities/category-pressure.jpg" alt="" width={1536} height={1024} sizes="(max-width: 680px) calc(100vw - 40px), (max-width: 900px) calc((100vw - 60px) / 2), 380px" /></figure>
+              <div className="compare-how-card-body"><span>03</span><h3>Category pressure</h3><p>Find whether housing, groceries or another expense is creating most of the difference.</p></div>
+            </article>
           </div>
         </div>
       </section>
@@ -94,45 +104,63 @@ export default function CompareCitiesPage() {
         <div className="page-shell">
           <header className="compare-section-heading compare-browse-heading">
             <div><p className="eyebrow">Example comparisons</p><h2>Open a city pair directly.</h2></div>
-            <p>These are a small set of examples, not a fixed directory. Search any city with available data in the workspace above; newly added city records appear there automatically.</p>
+            <p>These examples are a starting point. Search any of the {cities.length} cities in the workspace above to build the comparison that fits your move.</p>
           </header>
           <div className="compare-pair-grid">{pairs.map((pair, index) => <PairCard key={`${pair.from.slug}-${pair.to.slug}`} pair={pair} index={index} />)}</div>
         </div>
       </section>
 
       <section className="compare-decision-section">
-        <div className="page-shell compare-decision-grid">
-          <header><p className="eyebrow">Before you decide</p><h2>Check what an estimate cannot know.</h2></header>
-          <div className="compare-decision-list">
-            <article><span>01</span><div><h3>Neighborhood</h3><p>Price the home size, area and commute you would actually choose.</p></div></article>
-            <article><span>02</span><div><h3>Local take-home pay</h3><p>Convert gross offers after tax, pension, benefits and any recurring deductions.</p></div></article>
-            <article><span>03</span><div><h3>Move-in cash</h3><p>Keep deposits, visas, shipping and temporary accommodation outside the monthly estimate.</p></div></article>
+        <div className="page-shell compare-boundaries">
+          <header className="compare-boundaries-header"><p className="eyebrow">Before you decide</p><h2>Check what an estimate cannot know.</h2><p>A useful estimate narrows the decision. These three inputs still need evidence from your actual move.</p></header>
+          <div className="compare-boundary-list">
+            <article><span>01</span><h3>Neighborhood</h3><p>Price the home size, area and commute you would actually choose.</p></article>
+            <article><span>02</span><h3>Local take-home pay</h3><p>Convert gross offers after tax, pension, benefits and any recurring deductions.</p></article>
+            <article><span>03</span><h3>Move-in cash</h3><p>Keep deposits, visas, shipping and temporary accommodation outside the monthly estimate.</p></article>
           </div>
         </div>
       </section>
 
       <section className="compare-research-section">
-        <div className="page-shell compare-research-grid">
-          <header><p className="eyebrow">What a defensible result needs</p><h2>A headline percentage is the beginning, not the conclusion.</h2><p>The World Bank defines purchasing power parities as spatial price measures for a comparable basket. For a household decision, that same logic requires comparable items, useful weights and an honest geographic label.</p></header>
-          <div className="compare-research-list">
-            <article><span>Basket</span><h3>Comparable items and quantities</h3><p>Changing home size, commute or household at the same time as the city makes the result impossible to interpret.</p></article>
-            <article><span>Weights</span><h3>Your expensive categories matter most</h3><p>A large rent difference should influence the result more than a small change in coffee or cinema prices.</p></article>
-            <article><span>Geography</span><h3>City, metro and country are not synonyms</h3><p>Use the narrowest reliable geography and disclose any fallback rather than silently mixing levels.</p></article>
-            <article><span>Uncertainty</span><h3>Close scores are not decisive rankings</h3><p>Source coverage, observation age, exchange rates and neighborhood choice may outweigh a few index points.</p></article>
+        <div className="page-shell compare-evidence">
+          <header className="compare-evidence-header"><p className="eyebrow">What a useful result needs</p><h2>A headline percentage is the beginning, not the conclusion.</h2><p>A reliable household comparison requires comparable items, useful category weights and an honest geographic label. The percentage becomes useful when you can see which assumptions created it.</p></header>
+          <div className="compare-evidence-grid">
+            <article>
+              <div className="compare-evidence-marker"><span>01</span><ShoppingBasket aria-hidden="true" /></div>
+              <div className="compare-evidence-copy"><span>Basket</span><h3>Comparable items and quantities</h3><p>Changing home size, commute or household at the same time as the city makes the result impossible to interpret.</p></div>
+            </article>
+            <article>
+              <div className="compare-evidence-marker"><span>02</span><Scale aria-hidden="true" /></div>
+              <div className="compare-evidence-copy"><span>Weights</span><h3>Your expensive categories matter most</h3><p>A large rent difference should influence the result more than a small change in coffee or cinema prices.</p></div>
+            </article>
+            <article>
+              <div className="compare-evidence-marker"><span>03</span><MapPinned aria-hidden="true" /></div>
+              <div className="compare-evidence-copy"><span>Geography</span><h3>City, metro and country are not synonyms</h3><p>Use the narrowest reliable geography and disclose any fallback rather than silently mixing levels.</p></div>
+            </article>
+            <article>
+              <div className="compare-evidence-marker"><span>04</span><CircleHelp aria-hidden="true" /></div>
+              <div className="compare-evidence-copy"><span>Uncertainty</span><h3>Close scores are not decisive rankings</h3><p>Category coverage, observation age, exchange rates and neighborhood choice may outweigh a few index points.</p></div>
+            </article>
           </div>
         </div>
       </section>
 
       <section className="compare-interpretation-section">
-        <div className="page-shell compare-interpretation-grid">
-          <div><p className="eyebrow">Interpret the math</p><h2>Why the reverse percentage is different</h2><p>If a comparable basket is 100 in the current city and 120 in the destination, the destination is 20% higher. Reversing the move gives (100 ÷ 120 − 1), so the first city is about 16.7% lower. Both statements can be correct because the base changes.</p><div className="formula-card"><span>Direction-specific difference</span><strong>(destination ÷ current − 1) × 100</strong></div></div>
-          <aside><h3>Before acting on the result</h3><ul><li>Replace the modeled rent with neighborhoods you would choose.</li><li>Check whether the commute requires a car.</li><li>Add healthcare and childcare only for the relevant household.</li><li>Convert an offer from gross to take-home pay.</li><li>Budget deposits, visas and setup costs separately.</li></ul><Link href="/guides/how-to-compare-cost-of-living">Read the complete comparison guide →</Link></aside>
+        <div className="page-shell compare-math">
+          <header className="compare-math-header"><p className="eyebrow">Interpret the math</p><h2>Why the reverse percentage is different</h2><p>If a comparable basket is 100 in the current city and 120 in the destination, both statements below are correct. The result changes because the starting value, or denominator, changes.</p></header>
+          <figure className="compare-math-visual">
+            <Image src="/images/compare/direction-percentage-visual.jpg" alt="The same short and tall measurement columns shown in opposite comparison directions" width={1600} height={800} sizes="(max-width: 680px) calc(100vw - 40px), (max-width: 1048px) calc(100vw - 48px), 1000px" />
+            <figcaption className="compare-math-visual-copy" aria-label="Current to destination: 100 to 120 is 20 percent higher. Destination to current: 120 to 100 is 16.7 percent lower. Direction-specific difference equals destination divided by current minus one, multiplied by 100.">
+              <article><span>Current to destination</span><strong>100 → 120</strong><b>20% higher</b></article>
+              <article><span>Destination to current</span><strong>120 → 100</strong><b>16.7% lower</b></article>
+              <div className="compare-math-visual-formula"><span>Same values · different base</span><small>Direction-specific difference</small><strong>(destination ÷ current − 1) × 100</strong></div>
+            </figcaption>
+          </figure>
+          <aside className="compare-math-checks"><h3>Before acting on the result</h3><ul><li>Replace modeled rent with real neighborhoods.</li><li>Check whether the commute requires a car.</li><li>Add relevant healthcare and childcare.</li><li>Convert gross offers to take-home pay.</li><li>Budget moving and setup costs separately.</li></ul><Link href="/guides/how-to-compare-cost-of-living">Read the complete comparison guide →</Link></aside>
         </div>
       </section>
 
-      <section className="compare-source-section"><div className="page-shell"><ResearchCitations ids={["world-bank-icp", "bea-rpp", "bls-ce", "ons-household-costs"]} title="Research behind the comparison method" /></div></section>
-
-      <section className="compare-faq-section"><div className="page-shell research-faq-layout"><header><p className="eyebrow">Comparison FAQ</p><h2>Questions that change the answer</h2></header><div className="article-faq">{faqs.map(([question, answer]) => <details key={question}><summary>{question}<span>+</span></summary><p>{answer}</p></details>)}</div></div></section>
+      <section className="compare-faq-section"><div className="page-shell compare-faq-frame"><header className="compare-faq-heading"><p className="eyebrow">Comparison FAQ</p><h2>Questions that change the answer</h2><p>Use these checks when a result looks surprising or when two cities appear unusually close.</p></header><AnimatedFaqList className="article-faq compare-faq-list" items={faqs} /></div></section>
 
       <SiteFooter />
     </main>

@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1800 820" role="img" aria-labelledby="title description">
+  <title id="title">Cost difference and spending-equivalent income calculations</title>
+  <desc id="description">The cost difference formula is destination basket divided by current basket minus one, multiplied by one hundred. Spending-equivalent income is current take-home multiplied by destination basket divided by current basket.</desc>
+  <rect width="1800" height="820" fill="#f8f7f2"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <text x="48" y="164" fill="#47695b" font-size="20" font-weight="700" letter-spacing="2.4">COST DIFFERENCE</text>
+    <rect x="48" y="199" width="10" height="84" rx="5" fill="#9caf9f"/>
+    <text x="88" y="245" fill="#26332e" font-size="54" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-weight="700" letter-spacing="-1.8">(destination basket ÷ current basket − 1) ×</text>
+    <text x="88" y="310" fill="#26332e" font-size="54" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-weight="700" letter-spacing="-1.8">100</text>
+    <text x="88" y="358" fill="#68736e" font-size="22">Shows how much more or less the selected basket is estimated to cost in the destination.</text>
+  </g>
+  <rect x="48" y="402" width="1704" height="2" fill="#c9cec8"/>
+  <rect x="48" y="442" width="1704" height="292" rx="18" fill="#eaf0eb"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <text x="88" y="502" fill="#47695b" font-size="20" font-weight="700" letter-spacing="2.4">SPENDING-EQUIVALENT INCOME</text>
+    <text x="88" y="567" fill="#26332e" font-size="35" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-weight="700" letter-spacing="-1.2">current take-home × destination basket ÷</text>
+    <text x="88" y="614" fill="#26332e" font-size="35" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" font-weight="700" letter-spacing="-1.2">current basket</text>
+    <line x1="1110" y1="494" x2="1110" y2="682" stroke="#b8c4bb" stroke-width="2"/>
+    <text x="1160" y="525" fill="#68736e" font-size="22">
+      <tspan x="1160" dy="0">This preserves the purchasing power of the selected</tspan>
+      <tspan x="1160" dy="35">recurring basket. It is not a prediction of the salary</tspan>
+      <tspan x="1160" dy="35">an employer will offer.</tspan>
+    </text>
+  </g>
+</svg>

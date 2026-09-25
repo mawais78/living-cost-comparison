@@ -1,12 +1,12 @@
 import type { Metadata } from "next"
+import Image from "next/image"
 import Link from "next/link"
 
+import { AnimatedFaqList } from "@/components/animated-faq"
 import { GuideRail } from "@/components/guide-rail"
-import { ResearchCitations } from "@/components/research-citations"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import { StructuredData } from "@/components/structured-data"
-import { researchUpdated } from "@/lib/research"
 
 const path = "/guides/equivalent-salary-for-relocation"
 const faqs = [
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   title: "Equivalent Salary After Moving",
   description: "Calculate the salary needed after relocating using living costs, take-home pay, taxes, benefits and one-time moving expenses.",
   alternates: { canonical: path },
-  openGraph: { type: "article", title: "How to Calculate an Equivalent Salary After Moving", description: "A practical framework for converting current spending power into a relocation salary target.", url: path },
+  openGraph: { type: "article", title: "How to Calculate an Equivalent Salary After Moving", description: "A practical framework for converting current spending power into a relocation salary target.", url: path, images: [{ url: "/images/guides/equivalent-salary-relocation.jpg", width: 1536, height: 1024, alt: "Salary and relocation planning materials arranged on a desk" }] },
 }
 
 export default function EquivalentSalaryGuidePage() {
@@ -28,20 +28,23 @@ export default function EquivalentSalaryGuidePage() {
     <main className="research-page">
       <SiteHeader />
       <StructuredData data={[
-        { "@context": "https://schema.org", "@type": "Article", headline: "How to Calculate an Equivalent Salary After Moving", description: metadata.description, datePublished: "2026-09-22", dateModified: "2026-09-22", author: { "@type": "Organization", name: "Living Cost Comparison" }, publisher: { "@type": "Organization", name: "Living Cost Comparison" }, mainEntityOfPage: `https://livingcostcomparison.com${path}` },
-        { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: "https://livingcostcomparison.com/" }, { "@type": "ListItem", position: 2, name: "Guides" }, { "@type": "ListItem", position: 3, name: "Equivalent salary after moving", item: `https://livingcostcomparison.com${path}` }] },
+        { "@context": "https://schema.org", "@type": "Article", headline: "How to Calculate an Equivalent Salary After Moving", description: metadata.description, image: "https://livingcostcomparison.com/images/guides/equivalent-salary-relocation.jpg", datePublished: "2026-09-22", dateModified: "2026-09-22", author: { "@type": "Organization", name: "Living Cost Comparison" }, publisher: { "@type": "Organization", name: "Living Cost Comparison" }, mainEntityOfPage: `https://livingcostcomparison.com${path}` },
+        { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: "https://livingcostcomparison.com/" }, { "@type": "ListItem", position: 2, name: "Guides", item: "https://livingcostcomparison.com/guides" }, { "@type": "ListItem", position: 3, name: "Equivalent salary after moving", item: `https://livingcostcomparison.com${path}` }] },
         { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map(([question, answer]) => ({ "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer } })) },
       ]} />
 
       <header className="research-mast salary-guide-mast">
         <div className="page-shell research-mast-grid">
           <div>
-            <nav className="breadcrumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span>/</span><span>Guides</span><span>/</span><span>Equivalent salary</span></nav>
+            <nav className="breadcrumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span>/</span><Link href="/guides">Guides</Link><span>/</span><span>Equivalent salary</span></nav>
             <p className="eyebrow">Salary guide · 11 minute read</p>
             <h1>How to calculate an equivalent salary after moving</h1>
             <p className="research-deck">The right target is not your current gross salary multiplied by one city index. Build it from take-home pay, your household budget and the parts of compensation that do not appear in a paycheck.</p>
           </div>
-          <dl className="research-byline"><div><dt>Reviewed</dt><dd>{researchUpdated}</dd></div><div><dt>Primary sources</dt><dd>OECD, BLS, MIT</dd></div><div><dt>Use for</dt><dd>Offers and relocation negotiations</dd></div></dl>
+          <aside className="research-mast-aside">
+            <figure className="research-mast-visual"><Image src="/images/guides/equivalent-salary-relocation.jpg" alt="Salary and relocation planning materials arranged on a desk" width={1536} height={1024} priority /></figure>
+            <dl className="research-byline"><div><dt>Updated</dt><dd>23 September 2026</dd></div><div><dt>Covers</dt><dd>Take-home pay, tax and benefits</dd></div><div><dt>Use for</dt><dd>Offers and relocation negotiations</dd></div></dl>
+          </aside>
         </div>
       </header>
 
@@ -71,7 +74,7 @@ export default function EquivalentSalaryGuidePage() {
               <li><span>02</span><div><h3>Measure your current monthly budget</h3><p>Use actual spending where possible. Separate housing, food, transport, utilities, healthcare, family costs, debt obligations, discretionary spending and regular savings.</p></div></li>
               <li><span>03</span><div><h3>Reprice the same basket in the destination</h3><p>Hold household size and lifestyle constant. Change only the prices and unavoidable structural differences, such as a required private health plan or a car-dependent commute.</p></div></li>
               <li><span>04</span><div><h3>Preserve the margin you need</h3><p>Add the destination budget to your chosen monthly margin for savings, debt repayment and unexpected costs.</p></div></li>
-              <li><span>05</span><div><h3>Convert net target to gross salary</h3><p>Apply destination tax and mandatory-contribution rules for the correct household case. The OECD's international comparisons demonstrate why gross and take-home relationships differ across countries and family types.</p></div></li>
+              <li><span>05</span><div><h3>Convert net target to gross salary</h3><p>Apply destination tax and mandatory-contribution rules for the correct household case. Gross and take-home relationships differ across countries and family types.</p></div></li>
               <li><span>06</span><div><h3>Value the rest of the package</h3><p>Compare health cover, pension, paid leave, bonus, equity and relocation support. Do not add their face value to cash unless you would otherwise buy the same benefit.</p></div></li>
             </ol>
           </section>
@@ -84,12 +87,12 @@ export default function EquivalentSalaryGuidePage() {
               <div><span>Destination net target</span><strong>4,100 + 1,500 = 5,600</strong></div>
               <div><span>Then</span><strong>Convert 5,600 net to destination gross pay</strong></div>
             </div>
-            <p>This method preserves the household's selected cash margin. A simple index-ratio method would multiply the whole salary, even though some income may currently go to savings or obligations that do not change with local prices.</p>
+            <p>This method preserves the household’s selected cash margin. A simple index-ratio method would multiply the whole salary, even though some income may currently go to savings or obligations that do not change with local prices.</p>
           </section>
 
           <section>
             <h2>What taxes change</h2>
-            <p>The OECD defines a net personal average tax rate using personal income tax and employee social contributions, net of cash benefits, as a share of gross wage earnings. It separately defines the wider tax wedge from the employer's perspective. These are not interchangeable.</p>
+            <p>Personal income tax, employee contributions and cash benefits determine the relationship between gross earnings and take-home pay. The wider cost to the employer is a separate measure. These are not interchangeable.</p>
             <div className="research-table-wrap"><table className="research-table"><thead><tr><th>Measure</th><th>What it answers</th><th>Common mistake</th></tr></thead><tbody>
               <tr><th>Gross salary</th><td>Contractual cash pay before employee taxes and deductions</td><td>Comparing gross offers across tax systems as if they were spendable income</td></tr>
               <tr><th>Take-home pay</th><td>Cash available after modeled employee tax and mandatory deductions</td><td>Ignoring filing status, children, benefits or local taxes</td></tr>
@@ -122,8 +125,7 @@ export default function EquivalentSalaryGuidePage() {
             <Link href="/salary-comparison">Open the equivalent salary calculator →</Link>
           </section>
 
-          <section><h2>Frequently asked questions</h2><div className="article-faq">{faqs.map(([question, answer]) => <details key={question}><summary>{question}<span>+</span></summary><p>{answer}</p></details>)}</div></section>
-          <ResearchCitations ids={["oecd-taxing-wages", "bls-ecec", "bls-ce", "mit-living-wage"]} />
+          <section><h2>Frequently asked questions</h2><AnimatedFaqList className="article-faq" items={faqs} /></section>
         </article>
       </div>
       <SiteFooter />

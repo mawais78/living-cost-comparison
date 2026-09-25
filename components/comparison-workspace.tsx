@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { CityCombobox } from "@/components/city-combobox"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { cities, costCategories, defaultComparison, getCity, getComparisonPath, getMonthlyCost, householdMultipliers, lifestyleMultipliers } from "@/lib/cost-data"
+import { cities, costCategories, defaultComparison, getCanonicalComparisonPath, getCity, getMonthlyCost, householdMultipliers, lifestyleMultipliers } from "@/lib/cost-data"
 
 type Household = keyof typeof householdMultipliers
 type Lifestyle = keyof typeof lifestyleMultipliers
@@ -135,7 +135,7 @@ export function ComparisonWorkspace({ initialFrom = defaultComparison.from, init
             <span className="studio-income-input"><b>$</b><Input type="number" min={0} step={100} value={income} onChange={(event) => setIncome(Number(event.target.value) || 0)} /></span>
           </label>
         </div>
-        <p className="studio-data-note"><strong>Planning estimate</strong>Prototype data in USD equivalent, updated {from.updated}. Taxes and moving costs are excluded.</p>
+        <p className="studio-data-note"><strong>Planning estimate</strong>USD equivalent, updated {from.updated}. Taxes and one-time moving costs are excluded.</p>
       </aside>
 
       <div className="studio-results" aria-live="polite">
@@ -176,7 +176,7 @@ export function ComparisonWorkspace({ initialFrom = defaultComparison.from, init
 
           <div className="studio-breakdown-footer">
             <div className="studio-largest-change"><span>Largest change</span><p>{largestChange.delta === 0 ? "Every category is currently equal." : <><strong>{largestChange.label}</strong> has the biggest modeled difference at {money.format(Math.abs(largestChange.delta))} per month.</>}</p></div>
-            {from.slug !== to.slug && <Link href={getComparisonPath(from.slug, to.slug)} className="studio-detail-link">Open shareable comparison <ArrowRight /></Link>}
+            {from.slug !== to.slug && <Link href={getCanonicalComparisonPath(from.slug, to.slug)} className="studio-detail-link">Open shareable comparison <ArrowRight /></Link>}
           </div>
         </section>
       </div>

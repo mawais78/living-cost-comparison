@@ -4,7 +4,7 @@ import { useMemo, useState } from "react"
 import Link from "next/link"
 
 import { CityCombobox } from "@/components/city-combobox"
-import { defaultComparison, getCity, getComparisonPath, getMonthlyCost, type householdMultipliers, type lifestyleMultipliers } from "@/lib/cost-data"
+import { defaultComparison, getCanonicalComparisonPath, getCity, getMonthlyCost, type householdMultipliers, type lifestyleMultipliers } from "@/lib/cost-data"
 
 type Household = keyof typeof householdMultipliers
 type Lifestyle = keyof typeof lifestyleMultipliers
@@ -52,7 +52,7 @@ export function SalaryCalculator() {
           <div><dt>{from.city} model budget</dt><dd>{money.format(result.fromBudget)}</dd></div>
           <div><dt>{to.city} model budget</dt><dd>{money.format(result.toBudget)}</dd></div>
         </dl>
-        <Link href={getComparisonPath(from.slug, to.slug)}>Inspect the full cost breakdown <span>→</span></Link>
+        <Link href={getCanonicalComparisonPath(from.slug, to.slug)}>Inspect the full cost breakdown <span>→</span></Link>
         <small className="salary-answer-note">Planning estimate only. Taxes, benefits and one-time moving costs are not included.</small>
       </div>
     </section>

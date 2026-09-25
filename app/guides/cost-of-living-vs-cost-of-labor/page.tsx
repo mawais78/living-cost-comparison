@@ -1,12 +1,12 @@
 import type { Metadata } from "next"
+import Image from "next/image"
 import Link from "next/link"
 
+import { AnimatedFaqList } from "@/components/animated-faq"
 import { GuideRail } from "@/components/guide-rail"
-import { ResearchCitations } from "@/components/research-citations"
 import { SiteFooter } from "@/components/site-footer"
 import { SiteHeader } from "@/components/site-header"
 import { StructuredData } from "@/components/structured-data"
-import { researchUpdated } from "@/lib/research"
 
 const path = "/guides/cost-of-living-vs-cost-of-labor"
 const faqs = [
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   title: "Cost of Living vs Cost of Labor",
   description: "Understand why local living costs and local salaries do not move together, and how to use both when evaluating a job offer or remote-pay adjustment.",
   alternates: { canonical: path },
-  openGraph: { type: "article", title: "Cost of Living vs Cost of Labor", description: "Why an expensive city does not automatically produce an equal salary increase—and how to evaluate the gap.", url: path },
+  openGraph: { type: "article", title: "Cost of Living vs Cost of Labor", description: "Why an expensive city does not automatically produce an equal salary increase, and how to evaluate the gap.", url: path, images: [{ url: "/images/guides/cost-of-living-vs-labor.jpg", width: 1536, height: 1024, alt: "Household expenses and employer compensation shown as separate measures" }] },
 }
 
 export default function CostOfLaborGuidePage() {
@@ -28,20 +28,23 @@ export default function CostOfLaborGuidePage() {
     <main className="research-page">
       <SiteHeader />
       <StructuredData data={[
-        { "@context": "https://schema.org", "@type": "Article", headline: "Cost of Living vs Cost of Labor", description: metadata.description, datePublished: "2026-09-22", dateModified: "2026-09-22", author: { "@type": "Organization", name: "Living Cost Comparison" }, publisher: { "@type": "Organization", name: "Living Cost Comparison" }, mainEntityOfPage: `https://livingcostcomparison.com${path}` },
-        { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: "https://livingcostcomparison.com/" }, { "@type": "ListItem", position: 2, name: "Guides" }, { "@type": "ListItem", position: 3, name: "Cost of living vs cost of labor", item: `https://livingcostcomparison.com${path}` }] },
+        { "@context": "https://schema.org", "@type": "Article", headline: "Cost of Living vs Cost of Labor", description: metadata.description, image: "https://livingcostcomparison.com/images/guides/cost-of-living-vs-labor.jpg", datePublished: "2026-09-22", dateModified: "2026-09-22", author: { "@type": "Organization", name: "Living Cost Comparison" }, publisher: { "@type": "Organization", name: "Living Cost Comparison" }, mainEntityOfPage: `https://livingcostcomparison.com${path}` },
+        { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: "https://livingcostcomparison.com/" }, { "@type": "ListItem", position: 2, name: "Guides", item: "https://livingcostcomparison.com/guides" }, { "@type": "ListItem", position: 3, name: "Cost of living vs cost of labor", item: `https://livingcostcomparison.com${path}` }] },
         { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map(([question, answer]) => ({ "@type": "Question", name: question, acceptedAnswer: { "@type": "Answer", text: answer } })) },
       ]} />
 
       <header className="research-mast labor-guide-mast">
         <div className="page-shell research-mast-grid">
           <div>
-            <nav className="breadcrumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span>/</span><span>Guides</span><span>/</span><span>Living vs labor cost</span></nav>
+            <nav className="breadcrumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span>/</span><Link href="/guides">Guides</Link><span>/</span><span>Living vs labor cost</span></nav>
             <p className="eyebrow">Compensation guide · 9 minute read</p>
             <h1>Cost of living and cost of labor are not the same</h1>
-            <p className="research-deck">One describes the household budget. The other describes the employer's market for talent. A relocation decision needs both, but combining them into one percentage hides the most important trade-off.</p>
+            <p className="research-deck">One describes the household budget. The other describes the employer’s market for talent. A relocation decision needs both, but combining them into one percentage hides the most important trade-off.</p>
           </div>
-          <dl className="research-byline"><div><dt>Reviewed</dt><dd>{researchUpdated}</dd></div><div><dt>Primary sources</dt><dd>BLS, OECD, WorldatWork</dd></div><div><dt>Use for</dt><dd>Offers and geographic pay</dd></div></dl>
+          <aside className="research-mast-aside">
+            <figure className="research-mast-visual"><Image src="/images/guides/cost-of-living-vs-labor.jpg" alt="Household expenses and employer compensation shown as separate measures" width={1536} height={1024} priority /></figure>
+            <dl className="research-byline"><div><dt>Updated</dt><dd>23 September 2026</dd></div><div><dt>Covers</dt><dd>Living costs, pay and benefits</dd></div><div><dt>Use for</dt><dd>Offers and geographic pay</dd></div></dl>
+          </aside>
         </div>
       </header>
 
@@ -51,13 +54,13 @@ export default function CostOfLaborGuidePage() {
           <section className="answer-box">
             <p className="eyebrow">The distinction</p>
             <h2>Living costs price a household. Labor costs price a job market.</h2>
-            <p>Cost of living asks what a defined basket—housing, food, transport, healthcare and other needs—costs in a location. Cost of labor asks what organizations must pay for work, shaped by skills, talent supply, employer demand, industry and benefits.</p>
+            <p>Cost of living asks what a defined basket of housing, food, transport, healthcare and other needs costs in a location. Cost of labor asks what organizations must pay for work, shaped by skills, talent supply, employer demand, industry and benefits.</p>
           </section>
 
           <section>
             <h2>Why the two measures diverge</h2>
             <p>Housing can become expensive because homes are scarce or a location is highly desirable without the local demand for every occupation rising by the same amount. The reverse can also occur: a specialized role may command a premium in a city whose average consumer prices are moderate.</p>
-            <p>The US Bureau of Labor Statistics measures employer compensation as wages and salaries plus benefit costs per employee hour. Its benefit categories include paid leave, supplemental pay, insurance, retirement and legally required benefits. That definition is fundamentally different from a household spending basket.</p>
+            <p>Employer compensation includes wages and salaries as well as benefit costs such as paid leave, insurance, retirement contributions and legally required payments. That definition is fundamentally different from a household spending basket.</p>
             <div className="contrast-panel"><div><span>Household side</span><h3>What must I spend?</h3><p>Rent, food, transport, utilities, health costs, childcare and discretionary choices.</p></div><div><span>Employer side</span><h3>What must we pay?</h3><p>Cash compensation, benefits and employer contributions needed to compete for labor.</p></div></div>
           </section>
 
@@ -68,7 +71,7 @@ export default function CostOfLaborGuidePage() {
               <li><span>02</span><div><h3>Different employer competition</h3><p>Concentrations of employers can bid up pay for some occupations, while workers outside those fields see little of that premium.</p></div></li>
               <li><span>03</span><div><h3>Benefits replace part of cash pay</h3><p>Health insurance, retirement contributions, paid leave and allowances can change employer cost and employee value without appearing in base salary.</p></div></li>
               <li><span>04</span><div><h3>Tax systems change take-home pay</h3><p>The same gross salary can create different disposable income. Household status and cash benefits can also alter the comparison.</p></div></li>
-              <li><span>05</span><div><h3>Companies use different geographic policies</h3><p>Some localize pay to the employee's residence, some use the office market, and others use national or role-based bands.</p></div></li>
+              <li><span>05</span><div><h3>Companies use different geographic policies</h3><p>Some localize pay to the employee’s residence, some use the office market, and others use national or role-based bands.</p></div></li>
             </ol>
           </section>
 
@@ -88,7 +91,7 @@ export default function CostOfLaborGuidePage() {
             <ul className="check-list">
               <li>Your destination take-home requirement and the tax assumptions behind it.</li>
               <li>The rent and commute scenario you expect to choose.</li>
-              <li>The market range for the role, level and location from a salary source.</li>
+              <li>The market range for the role, level and location.</li>
               <li>The cash value of missing or improved benefits.</li>
               <li>One-time relocation costs that should not be hidden in recurring salary.</li>
               <li>A floor, target and stretch range rather than one unsupported number.</li>
@@ -97,7 +100,7 @@ export default function CostOfLaborGuidePage() {
 
           <section>
             <h2>Where cost-of-living adjustments fit</h2>
-            <p>A cost-of-living adjustment can refer to an increase linked to inflation, a geographic differential or a temporary expatriate allowance. Those are different mechanisms. Ask what the employer's adjustment is designed to preserve, which index it follows, how often it is reviewed and whether it becomes part of base salary.</p>
+            <p>A cost-of-living adjustment can refer to an increase linked to inflation, a geographic differential or a temporary expatriate allowance. Those are different mechanisms. Ask what the employer’s adjustment is designed to preserve, which index it follows, how often it is reviewed and whether it becomes part of base salary.</p>
             <p>For remote work, also confirm which location determines pay. Residence, payroll location, office hub and hiring market can point to different compensation bands.</p>
           </section>
 
@@ -108,9 +111,7 @@ export default function CostOfLaborGuidePage() {
             <Link href="/salary-comparison">Estimate an equivalent salary →</Link>
           </section>
 
-          <section><h2>Frequently asked questions</h2><div className="article-faq">{faqs.map(([question, answer]) => <details key={question}><summary>{question}<span>+</span></summary><p>{answer}</p></details>)}</div></section>
-          <ResearchCitations ids={["bls-ecec", "oecd-taxing-wages", "bls-ce"]} title="Primary statistical references" />
-          <p className="secondary-source-note">Additional compensation context reviewed: <a href="https://worldatwork.org/publications/workspan-daily/the-difference-between-cost-of-living-and-cost-of-labor" target="_blank" rel="noreferrer">WorldatWork, “The Difference Between Cost of Living and Cost of Labor,” 20 August 2026</a>. This industry article informs the explanation but is not used as a city-price dataset.</p>
+          <section><h2>Frequently asked questions</h2><AnimatedFaqList className="article-faq" items={faqs} /></section>
         </article>
       </div>
       <SiteFooter />

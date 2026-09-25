@@ -19,23 +19,24 @@ export function SiteFooter() {
           </div>
         </div>
         <div>
-          <p className="footer-label">Standards</p>
+          <p className="footer-label">About</p>
           <div className="footer-links">
             <Link href="/methodology">Methodology</Link>
-            <Link href="/sources">Sources &amp; data status</Link>
-            <Link href="/about">About &amp; editorial policy</Link>
+            <Link href="/about">About Living Cost Comparison</Link>
+            <Link href="/guides">Guides</Link>
           </div>
         </div>
         <div>
           <p className="footer-label">Research guides</p>
           <div className="footer-links">
+            <Link href="/guides">All guides</Link>
             <Link href="/guides/how-to-compare-cost-of-living">How to compare living costs</Link>
             <Link href="/guides/equivalent-salary-for-relocation">Equivalent salary after moving</Link>
             <Link href="/guides/cost-of-living-vs-cost-of-labor">Cost of living vs cost of labor</Link>
           </div>
         </div>
       </div>
-      <div className="page-shell footer-base"><span>© 2026 Living Cost Comparison</span><span>Research reviewed 22 September 2026</span></div>
+      <div className="page-shell footer-base"><span>© 2026 Living Cost Comparison</span><span>Cost estimates updated September 2026</span></div>
     </footer>
   )
 }
