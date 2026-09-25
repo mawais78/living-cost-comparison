@@ -1246,7 +1246,7 @@ a { transition: color 140ms ease, background-color 140ms ease; }
 .index-explorer-table th { padding: 13px 15px; border-bottom: 1px solid var(--line-strong); color: var(--muted-ink); font-size: .75rem; font-weight: 750; letter-spacing: .04em; text-align: left; text-transform: uppercase; }
 .index-explorer-table td { padding: 18px 15px; border-bottom: 1px solid var(--line); font: 650 .875rem var(--font-mono); }
 .index-explorer-table tbody tr:hover { background: #f7f7fa; }
-.index-explorer-table td:first-child b { color: #96929c; }
+.index-explorer-table td:first-child b { color: var(--muted-ink); }
 .index-explorer-table td:nth-child(2) { font-family: var(--font-sans); }
 .index-explorer-table td:nth-child(2) strong { display: block; font-size: 1rem; }
 .index-explorer-table td:nth-child(2) small { display: block; margin-top: 4px; color: var(--muted-ink); font-size: .75rem; font-weight: 500; }
@@ -1373,6 +1373,7 @@ a { transition: color 140ms ease, background-color 140ms ease; }
   --brand-pine: #27302c;
   --brand-forest: #405c50;
   --brand-sage: #89978f;
+  --brand-sage-on-dark: #cbd2ce;
   --porcelain: #fffefa;
   --warm-field: #f3f1eb;
   --mist: #e9ede9;
@@ -1382,7 +1383,30 @@ a { transition: color 140ms ease, background-color 140ms ease; }
   --ink: #27302c;
   --blue: #405c50;
   --amber: #f6f5f0;
-  --muted-ink: #68716c;
+  --muted-ink: #59635e;
+}
+
+.method2-model,
+.method2-controls,
+.method2-limit-card,
+.method2-cta,
+.home-method-section-rich .home-method-grid article:nth-child(even),
+.home-final-cta,
+.compare-math-visual-formula,
+.compare-math-checks,
+.compare-source-section,
+.salary2-check-groups section:first-child,
+.guides-hub-mast,
+.guides-next-step,
+.index-definition,
+.index-direction-grid .formula-card,
+.city-guide-overview,
+.city-guide-comparison,
+.city-guide-next,
+.comparison-detail-answer,
+.comparison-detail-reading,
+.home-relocation-section {
+  --brand-sage: var(--brand-sage-on-dark);
 }
 
 body { background: var(--background); color: var(--foreground); font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
@@ -1501,7 +1525,7 @@ a, button, input, select, summary { outline-color: var(--brand-blue); outline-of
 .tool-hero, .compare-page-head, .subpage-hero, .salary-page-hero, .city-index-mast { border-bottom: 1px solid var(--line); background: #fffefa; color: var(--brand-ink); }
 .tool-hero, .compare-page-head, .salary-page-hero, .city-index-mast { padding-block: 46px 62px; }
 .tool-hero-copy h1, .compare-page-head h1, .salary-page-hero h1, .city-index-mast h1, .subpage-title { max-width: 820px; color: var(--brand-ink); font-family: inherit; font-size: clamp(2.65rem, 5vw, 4.55rem); font-weight: 640; letter-spacing: -.055em; line-height: .98; }
-.breadcrumbs, .salary-page-hero .breadcrumbs, .city-index-mast .breadcrumbs { color: #7a827e; }
+.breadcrumbs, .salary-page-hero .breadcrumbs, .city-index-mast .breadcrumbs { color: var(--muted-ink); }
 .tool-hero-copy > p:last-child, .compare-page-head aside p, .salary-page-hero-grid > p, .city-index-mast-grid > div > p:last-child { color: var(--muted-ink); }
 .compare-page-head aside, .salary-page-hero-grid > p { border-top: 1px solid var(--line-strong); }
 .compare-page-head aside span, .salary-page-hero .eyebrow, .city-index-mast .eyebrow { color: var(--brand-blue); }
