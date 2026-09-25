@@ -3266,8 +3266,8 @@ main, section, header, footer { min-width: 0; max-width: 100%; }
 .comparison-detail-answer { padding-block: 86px; background: var(--brand-ink); color: var(--porcelain); }
 .comparison-answer-header { display: grid; grid-template-columns: minmax(0, 1fr) minmax(300px, .62fr); gap: 70px; align-items: end; }
 .comparison-answer-header .eyebrow { color: var(--brand-sage); }
-.comparison-answer-header h2 { max-width: 760px; margin-top: 13px; color: var(--porcelain); font-size: clamp(2.4rem, 4.9vw, 4.5rem); font-weight: 700; letter-spacing: -.07em; line-height: .96; }
-.comparison-answer-header h2 strong { color: var(--brand-sage); }
+.comparison-answer-header h2 { max-width: 760px; margin-top: 13px; color: rgb(255 254 250 / 82%); font-size: clamp(2.4rem, 4.9vw, 4.5rem); font-weight: 700; letter-spacing: -.07em; line-height: .96; }
+.comparison-answer-header h2 strong { color: var(--porcelain); }
 .comparison-answer-header > p { color: rgb(255 255 255 / 68%); font-size: .94rem; line-height: 1.7; }
 .comparison-answer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: 55px; border: 1px solid rgb(255 255 255 / 20%); background: rgb(255 255 255 / 20%); }
 .comparison-answer-grid article { min-height: 185px; padding: 21px; background: var(--brand-ink); }
