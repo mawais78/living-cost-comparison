@@ -1898,6 +1898,7 @@ main, section, header, footer { min-width: 0; max-width: 100%; }
 .home-answer-grid > header { display: flex; min-height: 100%; flex-direction: column; justify-content: flex-start; padding: 34px 32px 38px; }
 .home-answer-grid > header .eyebrow { color: #b8c3bd; }
 .home-answer-grid > header h2 { max-width: 390px; color: var(--porcelain); }
+.home-answer-definition { margin-top: 24px; color: #d8e1da; font-size: .95rem; line-height: 1.75; }
 .home-answer-cards { display: grid; overflow: hidden; border-radius: 18px; background: var(--porcelain); }
 .home-answer-grid .home-answer-cards article { display: grid; grid-template-columns: 58px minmax(0, 1fr); gap: 24px; min-height: 184px; padding: 28px 30px 30px 26px; background: transparent; transition: background-color 180ms ease; }
 .home-answer-grid .home-answer-cards article + article { border-top: 1px solid var(--line); }
@@ -1918,6 +1919,7 @@ main, section, header, footer { min-width: 0; max-width: 100%; }
 .home-evidence-grid h2 { max-width: 640px; margin-top: 13px; font-size: clamp(2.15rem, 4vw, 3.5rem); font-weight: 700; letter-spacing: -.05em; line-height: 1; }
 .home-evidence-grid p { max-width: 650px; margin-top: 18px; color: var(--muted-ink); font-size: .95rem; line-height: 1.75; }
 .home-evidence-grid a { display: inline-block; margin-top: 20px; color: var(--brand-blue); font-size: .8rem; font-weight: 750; }
+.home-evidence-grid a.home-source-link { display: inline; margin: 0; font-size: inherit; font-weight: inherit; text-decoration: underline; text-underline-offset: 3px; }
 .home-evidence-visual { position: relative; overflow: hidden; margin: 0; border-radius: 20px; background: var(--porcelain); box-shadow: 0 22px 54px rgb(39 48 44 / 12%); }
 .home-evidence-visual > img { display: block; width: 100%; height: auto; }
 .home-evidence-visual figcaption { position: absolute; right: 14px; bottom: 14px; left: 14px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
@@ -1939,6 +1941,20 @@ main, section, header, footer { min-width: 0; max-width: 100%; }
 .home-method-grid article:nth-child(odd) .home-method-card-top svg { background: var(--mist); color: var(--brand-forest); }
 .home-method-grid article:nth-child(odd) h3 { color: var(--brand-ink); }
 .home-method-grid article:nth-child(odd) p { color: var(--muted-ink); }
+.home-income-example { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; margin-top: 40px; padding: 32px; border: 1px solid var(--line-strong); border-radius: 18px; background: var(--mist); }
+.home-income-example h3 { margin-top: 12px; color: var(--brand-ink); font-size: clamp(1.4rem, 2.5vw, 1.9rem); font-weight: 700; letter-spacing: -.03em; line-height: 1.2; }
+.home-income-example p { margin-top: 16px; color: var(--muted-ink); font-size: .93rem; line-height: 1.7; }
+.home-income-example strong { color: var(--brand-ink); }
+.home-salary-calculation { align-self: center; }
+.home-salary-calculation > span { color: var(--brand-forest); font-size: .8rem; font-weight: 750; line-height: 1.5; }
+.home-salary-calculation > p { color: var(--brand-ink); font-family: var(--font-mono); font-size: clamp(1.1rem, 2vw, 1.35rem); }
+.home-salary-calculation small { display: block; margin-top: 14px; color: var(--muted-ink); font-size: .8rem; line-height: 1.65; }
+.home-salary-calculation a { display: inline-flex; align-items: center; gap: 10px; margin-top: 22px; color: var(--brand-forest); font-size: .85rem; font-weight: 750; }
+.home-salary-calculation svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+@media (max-width: 760px) {
+  .home-income-example { grid-template-columns: minmax(0, 1fr); gap: 24px; padding: 24px 20px; }
+}
 .home-method-section-rich .text-link { display: inline-flex; align-items: center; margin-top: 24px; padding: 12px 16px; border-radius: 10px; background: var(--porcelain); color: var(--brand-blue); box-shadow: 0 9px 24px rgb(39 48 44 / 7%); font-size: .88rem; font-weight: 750; }
 .home-method-section-rich .text-link:hover { color: var(--brand-ink); transform: translateY(-1px); }
 .home-guides-section { padding-block: 96px; background: var(--porcelain); }
@@ -3401,7 +3417,7 @@ main, section, header, footer { min-width: 0; max-width: 100%; }
 .home-cost-driver-note strong { color: var(--brand-ink); font-size: .87rem; font-weight: 780; }
 .home-cost-driver-note p { margin-top: 8px; color: var(--muted-ink); font-size: .82rem; line-height: 1.62; }
 .home-cost-driver-list { border-top: 3px solid var(--brand-ink); }
-.home-cost-driver-list article { display: grid; grid-template-columns: 38px minmax(0, 1fr) auto; gap: 20px; align-items: start; padding-block: 24px; border-bottom: 1px solid var(--line); }
+.home-cost-driver-list article { display: grid; grid-template-columns: 38px minmax(0, 1fr); gap: 20px; align-items: start; padding-block: 24px; border-bottom: 1px solid var(--line); }
 .home-cost-driver-list article > span { color: var(--brand-forest); font: 700 .7rem var(--font-mono); letter-spacing: .06em; }
 .home-cost-driver-list h3 { color: var(--brand-ink); font-size: 1.02rem; font-weight: 760; line-height: 1.35; }
 .home-cost-driver-list p { max-width: 620px; margin-top: 8px; color: var(--muted-ink); font-size: .87rem; line-height: 1.65; }

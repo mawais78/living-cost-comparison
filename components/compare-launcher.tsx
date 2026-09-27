@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 
-import { cities, defaultComparison, getCanonicalComparisonPath, getCityLocation } from "@/lib/cost-data"
+import { cities, dataEdition, defaultComparison, getCanonicalComparisonPath, getCityLocation } from "@/lib/cost-data"
 
 const cityOptions = [...cities].sort((first, second) => first.city.localeCompare(second.city))
 
@@ -13,21 +13,21 @@ export function CompareLauncher() {
 
   return (
     <div className="home-launcher" aria-label="Start a city comparison">
-      <div className="home-launcher-head"><span>Start here</span><strong>Pick two cities</strong></div>
+      <div className="home-launcher-head"><span>Start your comparison</span><strong>Where could you live next?</strong></div>
       <label>
-        <span>Where you live</span>
+        <span>First city</span>
         <select value={from} onChange={(event) => setFrom(event.target.value)}>
           {cityOptions.map((city) => <option key={city.slug} value={city.slug} disabled={city.slug === to}>{getCityLocation(city)}</option>)}
         </select>
       </label>
       <label>
-        <span>Where you are considering</span>
+        <span>Second city</span>
         <select value={to} onChange={(event) => setTo(event.target.value)}>
           {cityOptions.map((city) => <option key={city.slug} value={city.slug} disabled={city.slug === from}>{getCityLocation(city)}</option>)}
         </select>
       </label>
-      <Link href={getCanonicalComparisonPath(from, to)} prefetch={false}>Compare these cities <span>→</span></Link>
-      <p>{cities.length} cities available · Organized by city and country · USD-equivalent estimates</p>
+      <Link href={getCanonicalComparisonPath(from, to)} prefetch={false}>Compare living costs <span>→</span></Link>
+      <p>{dataEdition} model edition · Monthly USD-equivalent estimates, including housing. Check current local prices before setting your budget.</p>
     </div>
   )
 }
