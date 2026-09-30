@@ -65,11 +65,19 @@ const categoryNotes = {
   groceries: "Food and household shopping. Dietary choices, local brands and household size can change your actual bill.",
   dining: "Meals and drinks away from home. Review this allowance against how often you expect to eat out.",
   transport: "Everyday travel. Check local transit fares or build a separate car budget with fuel, insurance and parking.",
-  utilities: "Energy, water, internet and mobile service. Confirm which bills your rent includes.",
-  healthcare: "A broad allowance for routine care and health spending. Check your eligibility, insurance and expected out-of-pocket costs.",
-  personal: "Clothing, grooming and everyday essentials. Adjust your own budget for the products and services you use.",
-  leisure: "Fitness, entertainment and recreation. Your routine determines how closely this allowance fits.",
-}
+  utilities: "Energy, water, heating and waste collection. Confirm which bills your rent includes.",
+  connectivity: "Home internet and mobile service. Check local plans, installation fees and contract terms.",
+  insurance: "Recurring personal, renter and household protection. Coverage requirements and employer benefits vary by location.",
+  healthcare: "A broad allowance for appointments, dental care and treatment. Check your eligibility, insurance and expected out-of-pocket costs.",
+  pharmacy: "Prescriptions, basic medicine and pharmacy purchases. Local coverage and dispensing rules can affect the amount you pay.",
+  personal: "Grooming, toiletries and routine personal services. Adjust the allowance to match the products and services you use.",
+  clothing: "Everyday clothing and footwear. Seasonal needs and workplace expectations can change this amount.",
+  household: "Cleaning supplies, small furnishings and home essentials. A new home may need a larger first-year allowance.",
+  householdServices: "Laundry, cleaning, repairs and routine home help. Local labor costs can make this line change considerably.",
+  fitness: "Gym, sports and routine wellness spending. Membership choices make this category highly personal.",
+  entertainment: "Streaming, events, games and recurring media. Review subscriptions that may change price or availability after a move.",
+  leisure: "Hobbies, local outings and recreation. Your routine determines how closely this allowance fits.",
+} satisfies Record<(typeof costCategories)[number]["key"], string>
 const salaryExample = {
   from: getCity("london"),
   to: getCity("amsterdam"),
@@ -81,7 +89,7 @@ const exampleEquivalent = Math.round(salaryExample.income * exampleToBudget / ex
 
 const faqs = [
   ["How do I compare the cost of living between two cities?", "Choose your current city and destination, then use the same household and lifestyle settings in both. Compare the monthly totals and category breakdown. Before deciding on a move, check local rent and transport prices and add expenses specific to your household."],
-  ["Does this cost-of-living calculator include rent?", "Yes. Housing is included in the monthly total, alongside groceries, dining out, transport, utilities and connectivity, healthcare, personal care and leisure. Housing is a modeled allowance; it is not a quote for a particular apartment or neighborhood."],
+  ["Does this cost-of-living calculator include rent?", "Yes. Housing is included in the monthly total, alongside food, transport, utilities, connectivity, insurance, healthcare, personal and household spending, fitness, entertainment and leisure. Housing is a modeled allowance; it is not a quote for a particular apartment or neighborhood."],
   ["Can I compare costs for a couple or a family of four?", "Yes. Choose one person, a couple or a family of four, with a lean, balanced or comfortable lifestyle. These presets scale the same city basket using fixed multipliers. They do not price each family member separately, and childcare and school fees are excluded."],
   ["What salary do I need to maintain my lifestyle in another city?", "The calculator multiplies your current monthly take-home income by the destination budget divided by the current-city budget. The result is an estimated net-income target in USD. Calculate taxes separately to work back to a gross salary, and check local market pay and benefits before evaluating an offer."],
   ["Which currency does the comparison use?", "All budgets and salary inputs use US dollars or USD equivalents so cities can be compared on the same basis. The calculator does not use live exchange rates. Check the current exchange rate separately if you earn or spend in another currency."],
@@ -161,7 +169,7 @@ export default function Home() {
         <div className="page-shell home-cost-drivers-layout">
           <header>
             <p className="eyebrow">What the calculator includes</p>
-            <h2 id="home-cost-drivers-title">Eight categories behind your monthly budget.</h2>
+            <h2 id="home-cost-drivers-title">{costCategories.length} categories behind your monthly budget.</h2>
             <p>Every city uses the same expense categories. The breakdown shows where the modeled difference comes from, so you can decide which local prices to research first.</p>
             <div className="home-cost-driver-note"><strong>Budget separately for the extras.</strong><p>Income tax, childcare, education, debt repayments, savings and one-time moving costs are outside these totals. The family preset does not add childcare or school fees.</p></div>
           </header>
@@ -282,7 +290,7 @@ export default function Home() {
             <div className="home-transparency-commitments">
               <article><span>01</span><div><h3>Modeled planning estimates</h3><p>Living Cost Comparison maintains rounded USD-equivalent budgets. These are broad city estimates, not live prices or quotes for your household.</p></div></article>
               <article><span>02</span><div><h3>{dataEdition} edition</h3><p>This identifies the current model edition. Individual values do not yet include provider-level citations, local observation dates or live exchange-rate timestamps.</p></div></article>
-              <article><span>03</span><div><h3>Shared assumptions</h3><p>Household and lifestyle presets scale the same basket. Dining, healthcare, personal care and leisure divide a shared spending allowance rather than separate price surveys.</p></div></article>
+              <article><span>03</span><div><h3>Shared assumptions</h3><p>Household and lifestyle presets scale the same basket. The expanded category view separates bundled spending without changing the city total.</p></div></article>
             </div>
             <nav aria-label="About the estimates"><Link href="/methodology">Read the calculation methodology <ArrowRight aria-hidden="true" /></Link><Link href="/about">About Living Cost Comparison <ArrowRight aria-hidden="true" /></Link></nav>
           </div>

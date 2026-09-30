@@ -1,4 +1,20 @@
-export type CostCategory = "housing" | "groceries" | "dining" | "transport" | "utilities" | "healthcare" | "personal" | "leisure"
+export type CostCategory =
+  | "housing"
+  | "groceries"
+  | "dining"
+  | "transport"
+  | "utilities"
+  | "connectivity"
+  | "insurance"
+  | "healthcare"
+  | "pharmacy"
+  | "personal"
+  | "clothing"
+  | "household"
+  | "householdServices"
+  | "fitness"
+  | "entertainment"
+  | "leisure"
 
 export type CityCost = {
   slug: string
@@ -16,19 +32,35 @@ export const costCategories: { key: CostCategory; label: string; description: st
   { key: "groceries", label: "Groceries", description: "Household size, diet and routine" },
   { key: "dining", label: "Dining out", description: "Meal frequency and local restaurant prices" },
   { key: "transport", label: "Transport", description: "Transit access, commute and car use" },
-  { key: "utilities", label: "Utilities & connectivity", description: "Energy, water, internet and mobile service" },
-  { key: "healthcare", label: "Healthcare", description: "Routine care, medicine and out-of-pocket costs" },
-  { key: "personal", label: "Personal care", description: "Clothing, grooming and household essentials" },
-  { key: "leisure", label: "Leisure", description: "Fitness, entertainment and recreation" },
+  { key: "utilities", label: "Home utilities", description: "Energy, water, heating and waste collection" },
+  { key: "connectivity", label: "Internet & mobile", description: "Home internet and personal mobile service" },
+  { key: "insurance", label: "Insurance & protection", description: "Recurring personal, renter and household cover" },
+  { key: "healthcare", label: "Healthcare", description: "Appointments, dental care and out-of-pocket treatment" },
+  { key: "pharmacy", label: "Medicines & pharmacy", description: "Prescriptions, basic medicine and pharmacy purchases" },
+  { key: "personal", label: "Personal care", description: "Grooming, toiletries and routine personal services" },
+  { key: "clothing", label: "Clothing & footwear", description: "Everyday clothing, shoes and replacement needs" },
+  { key: "household", label: "Household goods", description: "Cleaning supplies, small furnishings and home essentials" },
+  { key: "householdServices", label: "Household services", description: "Laundry, cleaning, repairs and routine home help" },
+  { key: "fitness", label: "Fitness & wellness", description: "Exercise, sports and routine wellness spending" },
+  { key: "entertainment", label: "Entertainment & subscriptions", description: "Streaming, events, games and recurring media" },
+  { key: "leisure", label: "Leisure", description: "Hobbies, local outings and recreation" },
 ]
 
 export const dataEdition = "September 2026"
 
 // Each record models the same monthly basket for one adult using the balanced
 // lifestyle setting. The original flexible-spend amount is partitioned into
-// dining, healthcare, personal care and leisure so totals remain comparable to
-// earlier editions. Values are USD-equivalent planning estimates rounded to
-// practical amounts, not live quotes or a promise of an individual budget.
+// dining, healthcare, personal care and leisure. The September 2026 category
+// expansion splits the existing utilities, healthcare, personal and leisure allowances into
+// more useful detail. It does not add spending to any city, so every previously
+// launched total, index value and comparison result stays unchanged.
+// Values are USD-equivalent planning estimates rounded to practical amounts,
+// not live quotes or a promise of an individual budget.
+function splitAmount(total: number, shares: number[]) {
+  const parts = shares.slice(0, -1).map((share) => Math.round(total * share / 5) * 5)
+  return [...parts, total - parts.reduce((sum, part) => sum + part, 0)]
+}
+
 function defineCity(
   slug: string,
   city: string,
@@ -38,14 +70,44 @@ function defineCity(
   housing: number,
   groceries: number,
   transport: number,
-  utilities: number,
+  utilitiesAndConnectivity: number,
   flexibleSpending: number,
   region?: string,
 ): CityCost {
   const dining = Math.round(flexibleSpending * 0.3 / 10) * 10
-  const healthcare = Math.round(flexibleSpending * 0.2 / 10) * 10
-  const personal = Math.round(flexibleSpending * 0.15 / 10) * 10
-  const leisure = flexibleSpending - dining - healthcare - personal
+  const previousHealthcare = Math.round(flexibleSpending * 0.2 / 10) * 10
+  const previousPersonal = Math.round(flexibleSpending * 0.15 / 10) * 10
+  const previousLeisure = flexibleSpending - dining - previousHealthcare - previousPersonal
+  const [utilities, connectivity] = splitAmount(utilitiesAndConnectivity, [0.72, 0.28])
+  const [healthcare, pharmacy] = splitAmount(previousHealthcare, [0.75, 0.25])
+  const [previousPersonalCare, clothing, household] = splitAmount(previousPersonal, [0.45, 0.35, 0.2])
+  const [personal, insurance] = splitAmount(previousPersonalCare, [0.6, 0.4])
+  const [fitness, previousLeisureAllowance] = splitAmount(previousLeisure, [0.35, 0.65])
+  const [householdServices, entertainment, leisure] = splitAmount(previousLeisureAllowance, [0.2, 0.35, 0.45])
+  const costs: Record<CostCategory, number> = {
+    housing,
+    groceries,
+    dining,
+    transport,
+    utilities,
+    connectivity,
+    insurance,
+    healthcare,
+    pharmacy,
+    personal,
+    clothing,
+    household,
+    householdServices,
+    fitness,
+    entertainment,
+    leisure,
+  }
+  const previousTotal = housing + groceries + transport + utilitiesAndConnectivity + flexibleSpending
+  const expandedTotal = Object.values(costs).reduce((sum, value) => sum + value, 0)
+
+  if (expandedTotal !== previousTotal) {
+    throw new Error(`Category expansion changed the baseline total for ${slug}`)
+  }
 
   return {
     slug,
@@ -55,7 +117,7 @@ function defineCity(
     currency,
     currencySymbol,
     updated: dataEdition,
-    costs: { housing, groceries, dining, transport, utilities, healthcare, personal, leisure },
+    costs,
   }
 }
 

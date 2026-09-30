@@ -7,11 +7,14 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { CityCombobox } from "@/components/city-combobox"
 import { Input } from "@/components/ui/input"
+import { PlanningSelect } from "@/components/planning-select"
 import { cities, costCategories, defaultComparison, getCanonicalComparisonPath, getCity, getMonthlyCost, householdMultipliers, lifestyleMultipliers } from "@/lib/cost-data"
 
 type Household = keyof typeof householdMultipliers
 type Lifestyle = keyof typeof lifestyleMultipliers
 const money = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 })
+const householdOptions = [{ value: "single", label: "1 person" }, { value: "couple", label: "Couple" }, { value: "family", label: "Family of 4" }] as const
+const lifestyleOptions = [{ value: "lean", label: "Lean" }, { value: "balanced", label: "Balanced" }, { value: "comfortable", label: "Comfortable" }] as const
 
 function CostCell({ value, max, tone, label }: { value: number; max: number; tone: "origin" | "destination"; label: string }) {
   return (
@@ -121,14 +124,8 @@ export function ComparisonWorkspace({ initialFrom = defaultComparison.from, init
         </div>
 
         <div className="studio-assumptions">
-          <label className="studio-field">
-            <span className="field-label">Household</span>
-            <select className="studio-native-select" value={household} onChange={(event) => setHousehold(event.target.value as Household)}><option value="single">1 person</option><option value="couple">Couple</option><option value="family">Family of 4</option></select>
-          </label>
-          <label className="studio-field">
-            <span className="field-label">Lifestyle</span>
-            <select className="studio-native-select" value={lifestyle} onChange={(event) => setLifestyle(event.target.value as Lifestyle)}><option value="lean">Lean</option><option value="balanced">Balanced</option><option value="comfortable">Comfortable</option></select>
-          </label>
+          <PlanningSelect label="Household" value={household} options={householdOptions} onValueChange={setHousehold} variant="studio" />
+          <PlanningSelect label="Lifestyle" value={lifestyle} options={lifestyleOptions} onValueChange={setLifestyle} variant="studio" />
           <label className="studio-field">
             <span className="field-label">Monthly take-home · USD</span>
             <span className="studio-income-input"><b>$</b><Input type="number" min={0} step={100} value={income} onChange={(event) => setIncome(Number(event.target.value) || 0)} /></span>

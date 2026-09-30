@@ -4,11 +4,14 @@ import { useMemo, useState } from "react"
 import Link from "next/link"
 
 import { CityCombobox } from "@/components/city-combobox"
+import { PlanningSelect } from "@/components/planning-select"
 import { defaultComparison, getCanonicalComparisonPath, getCity, getMonthlyCost, type householdMultipliers, type lifestyleMultipliers } from "@/lib/cost-data"
 
 type Household = keyof typeof householdMultipliers
 type Lifestyle = keyof typeof lifestyleMultipliers
 const money = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 })
+const householdOptions = [{ value: "single", label: "1 person" }, { value: "couple", label: "Couple" }, { value: "family", label: "Family of 4" }] as const
+const lifestyleOptions = [{ value: "lean", label: "Lean" }, { value: "balanced", label: "Balanced" }, { value: "comfortable", label: "Comfortable" }] as const
 
 export function SalaryCalculator() {
   const [fromSlug, setFromSlug] = useState(defaultComparison.from)
@@ -37,8 +40,8 @@ export function SalaryCalculator() {
         </div>
         <div className="salary-step salary-step-second"><span>02</span><div><strong>Match your setup</strong><p>Keep the assumptions the same in both cities.</p></div></div>
         <div className="salary-field-grid">
-          <label><span>Household</span><select value={household} onChange={(event) => setHousehold(event.target.value as Household)}><option value="single">1 person</option><option value="couple">Couple</option><option value="family">Family of 4</option></select></label>
-          <label><span>Lifestyle</span><select value={lifestyle} onChange={(event) => setLifestyle(event.target.value as Lifestyle)}><option value="lean">Lean</option><option value="balanced">Balanced</option><option value="comfortable">Comfortable</option></select></label>
+          <PlanningSelect label="Household" value={household} options={householdOptions} onValueChange={setHousehold} variant="salary" />
+          <PlanningSelect label="Lifestyle" value={lifestyle} options={lifestyleOptions} onValueChange={setLifestyle} variant="salary" />
         </div>
       </div>
 

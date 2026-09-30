@@ -40,7 +40,7 @@ export default function MethodologyPage() {
     <main className="methodology-page method2-page">
       <SiteHeader />
       <StructuredData data={[
-        { "@context": "https://schema.org", "@type": "TechArticle", headline: "Living Cost Comparison methodology", description: metadata.description, datePublished: "2026-09-18T00:00:00Z", dateModified: "2026-09-23T00:00:00Z", author: { "@type": "Organization", name: "Living Cost Comparison", url: "https://livingcostcomparison.com/about" }, publisher: { "@type": "Organization", name: "Living Cost Comparison", url: "https://livingcostcomparison.com/" }, mainEntityOfPage: "https://livingcostcomparison.com/methodology" },
+        { "@context": "https://schema.org", "@type": "TechArticle", headline: "Living Cost Comparison methodology", description: metadata.description, datePublished: "2026-09-18T00:00:00Z", dateModified: "2026-10-01T00:00:00Z", author: { "@type": "Organization", name: "Living Cost Comparison", url: "https://livingcostcomparison.com/about" }, publisher: { "@type": "Organization", name: "Living Cost Comparison", url: "https://livingcostcomparison.com/" }, mainEntityOfPage: "https://livingcostcomparison.com/methodology" },
         { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: "https://livingcostcomparison.com/" }, { "@type": "ListItem", position: 2, name: "Methodology", item: "https://livingcostcomparison.com/methodology" }] },
       ]} />
 
@@ -66,7 +66,7 @@ export default function MethodologyPage() {
           </div>
 
           <dl className="method2-meta">
-            <div><dt>Updated</dt><dd>23 September 2026</dd></div>
+            <div><dt>Updated</dt><dd>1 October 2026</dd></div>
             <div><dt>Coverage</dt><dd>{cities.length} cities</dd></div>
             <div><dt>Display currency</dt><dd>USD equivalent</dd></div>
             <div><dt>Primary use</dt><dd>Relocation planning</dd></div>

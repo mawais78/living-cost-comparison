@@ -19,10 +19,18 @@ const categoryAdvice: Record<CostCategory, string> = {
   groceries: "Household size, diet, imported products and how often you cook at home are the main variables here.",
   dining: "Meal frequency, neighborhood and the balance between casual meals and restaurants can change this category quickly.",
   transport: "A transit-first routine and a car-dependent routine can produce very different totals, especially when parking and insurance apply.",
-  utilities: "Climate, home size, energy efficiency and the services included in rent affect this recurring amount.",
+  utilities: "Climate, home size, energy efficiency and the home services included in rent affect this recurring amount.",
+  connectivity: "Internet speed, mobile data, provider availability and contract terms determine how closely this allowance fits.",
+  insurance: "Renter, household and personal protection requirements vary, so compare equivalent coverage rather than headline premiums alone.",
   healthcare: "Eligibility, employer cover, insurance choices and routine out-of-pocket care should be checked for the household you are moving with.",
-  personal: "Clothing, grooming and household essentials are flexible, so use your own monthly pattern when you replace the baseline.",
-  leisure: "Fitness, entertainment, hobbies and short trips are included as a planning allowance rather than a fixed bill.",
+  pharmacy: "Prescription coverage, generic availability and local dispensing rules can change medicine and pharmacy spending after a move.",
+  personal: "Grooming, toiletries and routine personal services are flexible, so replace the baseline with your own monthly pattern.",
+  clothing: "Climate, workplace expectations and replacement habits can make clothing and footwear spending uneven through the year.",
+  household: "Cleaning supplies, small furnishings and home essentials often run higher during the first months after a move.",
+  householdServices: "Laundry, cleaning, repairs and home help depend heavily on local labor prices and the services included with your home.",
+  fitness: "Gym memberships, sports and wellness routines vary widely, making this a useful category to personalize.",
+  entertainment: "Streaming plans, events, games and media subscriptions should be checked for local prices, availability and regional restrictions.",
+  leisure: "Hobbies, local outings and recreation are included as a planning allowance rather than a fixed bill.",
 }
 
 function getRankLabel(rank: number, totalCities: number) {
@@ -78,7 +86,7 @@ export default async function CityPage({ params }: Props) {
     share: Math.round((city.costs[category.key] / total) * 100),
   })).sort((a, b) => b.value - a.value)
   const topCategories = categoryRows.slice(0, 3)
-  const essentialTotal = city.costs.housing + city.costs.groceries + city.costs.transport + city.costs.utilities
+  const essentialTotal = city.costs.housing + city.costs.groceries + city.costs.transport + city.costs.utilities + city.costs.connectivity
   const flexibleTotal = total - essentialTotal
   const rankedCities = cities.map((item) => ({ city: item, total: getMonthlyCost(item, "single", "balanced") })).sort((a, b) => b.total - a.total)
   const rank = rankedCities.findIndex((item) => item.city.slug === city.slug) + 1
@@ -98,7 +106,7 @@ export default async function CityPage({ params }: Props) {
   return (
     <main className="city-guide-page">
       <StructuredData data={[
-        { "@context": "https://schema.org", "@type": "WebPage", name: `Cost of living in ${displayName}`, description: `Estimated monthly living costs in ${locationName}, with category detail, household scenarios and relocation planning guidance.`, dateModified: "2026-09-24", about: { "@type": "Place", name: locationName } },
+        { "@context": "https://schema.org", "@type": "WebPage", name: `Cost of living in ${displayName}`, description: `Estimated monthly living costs in ${locationName}, with category detail, household scenarios and relocation planning guidance.`, dateModified: "2026-10-01", about: { "@type": "Place", name: locationName } },
         { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: "https://livingcostcomparison.com/" }, { "@type": "ListItem", position: 2, name: "Cost of living", item: "https://livingcostcomparison.com/cost-of-living-index" }, { "@type": "ListItem", position: 3, name: displayName, item: `https://livingcostcomparison.com/cost-of-living/${values.country}/${values.city}` }] },
       ]} />
       <SiteHeader />
@@ -127,12 +135,12 @@ export default async function CityPage({ params }: Props) {
             <p className="eyebrow">At a glance</p>
             <h2>The number is useful when you can see what is inside it.</h2>
             <p>{displayName} has a modeled recurring baseline of {formatUsd(total)} for one adult with a balanced lifestyle. The estimate is not a promise of an individual budget. It is a consistent reference point for comparing cities before you plug in a real home, commute and take-home salary.</p>
-            <p>The essential part of this baseline is {formatUsd(essentialTotal)} for housing, groceries, transport and utilities. The remaining {formatUsd(flexibleTotal)} covers dining out, healthcare, personal care and leisure. Those two groups respond differently to a move: housing and transport often change because of geography, while flexible spending changes because of habits and choices.</p>
+            <p>The essential part of this baseline is {formatUsd(essentialTotal)} for housing, groceries, transport, utilities and connectivity. The remaining {formatUsd(flexibleTotal)} covers dining out, insurance, healthcare, medicines, personal and household spending, fitness, entertainment and leisure. Those two groups respond differently to a move: housing and transport often change because of geography, while flexible spending changes because of habits and choices.</p>
           </article>
           <div className="city-guide-stat-grid" aria-label={`${displayName} budget summary`}>
             <article><span>Annual baseline</span><strong>{formatUsd(annualTotal)}</strong><p>Recurring estimate before savings and one-time costs.</p></article>
-            <article><span>Essential costs</span><strong>{formatUsd(essentialTotal)}</strong><p>Housing, groceries, transport and utilities.</p></article>
-            <article><span>Flexible costs</span><strong>{formatUsd(flexibleTotal)}</strong><p>Dining, healthcare, personal care and leisure.</p></article>
+            <article><span>Essential costs</span><strong>{formatUsd(essentialTotal)}</strong><p>Housing, groceries, transport, utilities and connectivity.</p></article>
+            <article><span>Flexible costs</span><strong>{formatUsd(flexibleTotal)}</strong><p>Dining, insurance, healthcare, medicines, personal and household spending, fitness, entertainment and leisure.</p></article>
             <article><span>Top category</span><strong>{topCategories[0].label}</strong><p>{formatUsd(topCategories[0].value)} per month in the baseline.</p></article>
           </div>
         </div>

@@ -105,7 +105,7 @@ export default async function ComparisonPage({ params }: Props) {
   return (
     <main className="comparison-detail-page">
       <StructuredData data={[
-        { "@context": "https://schema.org", "@type": "WebPage", name: pairTitle, description: `Compare estimated monthly living costs in ${fromName} and ${toName}, including category pressure, salary translation and household scenarios.`, dateModified: "2026-09-24", about: [{ "@type": "Place", name: fromName }, { "@type": "Place", name: toName }] },
+        { "@context": "https://schema.org", "@type": "WebPage", name: pairTitle, description: `Compare estimated monthly living costs in ${fromName} and ${toName}, including category pressure, salary translation and household scenarios.`, dateModified: "2026-10-01", about: [{ "@type": "Place", name: fromName }, { "@type": "Place", name: toName }] },
         { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Home", item: "https://livingcostcomparison.com/" }, { "@type": "ListItem", position: 2, name: "Compare cities", item: "https://livingcostcomparison.com/compare-cities" }, { "@type": "ListItem", position: 3, name: `${fromName} vs ${toName}`, item: `https://livingcostcomparison.com${getCanonicalComparisonPath(from.slug, to.slug)}` }] },
       ]} />
       <SiteHeader />
@@ -150,7 +150,7 @@ export default async function ComparisonPage({ params }: Props) {
             <h2>Monthly cost breakdown for {fromName} and {toName}</h2>
             <div className="research-table-wrap pair-static-table">
               <table className="research-table">
-                <caption>{`Server-rendered monthly cost comparison for ${fromName} and ${toName} in USD equivalent`}</caption>
+                <caption className="sr-only">{`Monthly cost comparison between ${fromName} and ${toName}`}</caption>
                 <thead><tr><th>Category</th><th>{fromName}</th><th>{toName}</th><th>Difference</th></tr></thead>
                 <tbody>
                   {categoryRows.map((category) => <tr key={category.key}><th>{category.label}</th><td data-label={fromName}>{formatUsd(category.fromValue)}</td><td data-label={toName}>{formatUsd(category.toValue)}</td><td data-label="Difference">{formatSignedUsd(category.difference)}</td></tr>)}
