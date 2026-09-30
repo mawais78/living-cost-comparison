@@ -1044,7 +1044,6 @@ a { transition: color 140ms ease, background-color 140ms ease; }
 .home-launcher-head strong { color: var(--brand-ink); font-size: .9375rem; }
 .home-launcher label { display: grid; gap: 8px; margin-top: 20px; }
 .home-launcher label > span { color: var(--muted-ink); font-size: .875rem; font-weight: 650; }
-.home-launcher select { width: 100%; height: 52px; border: 1px solid var(--line-strong); border-radius: 3px; background: #fff; padding-inline: 13px; color: var(--brand-ink); font-size: 1rem; }
 .home-launcher > a { display: flex; align-items: center; justify-content: space-between; margin-top: 24px; padding: 15px 16px; background: var(--brand-ink); color: white; font-size: .9375rem; font-weight: 750; }
 .home-launcher > a:hover { background: var(--brand-blue); }
 .home-launcher > a.disabled { opacity: .45; pointer-events: none; }
@@ -1454,8 +1453,6 @@ a, button, input, select, summary { outline-color: var(--brand-blue); outline-of
 .home-launcher-head span { color: var(--brand-blue); font-size: .7rem; letter-spacing: .1em; }
 .home-launcher-head strong { font-size: .9rem; }
 .home-launcher label > span { color: var(--muted-ink); font-size: .78rem; }
-.home-launcher select { height: 50px; border-color: var(--line-strong); border-radius: 9px; background: white; font-size: .9rem; }
-.home-launcher select:focus { border-color: var(--brand-blue); box-shadow: 0 0 0 3px rgb(64 92 80 / 10%); outline: 0; }
 .home-launcher > a { border-radius: 9px; background: var(--brand-ink); font-size: .88rem; }
 .home-launcher > a:hover { background: var(--brand-blue); }
 .home-launcher > p { font-size: .69rem; }
@@ -1464,23 +1461,27 @@ a, button, input, select, summary { outline-color: var(--brand-blue); outline-of
 .city-picker { display: grid; min-width: 0; gap: 8px; }
 .city-picker-label { display: block; margin: 0; color: var(--muted-ink); font-size: .78rem; font-weight: 680; line-height: 1.35; }
 .city-picker-studio .city-picker-label { font-size: .7rem; font-weight: 750; letter-spacing: .1em; text-transform: uppercase; }
-.city-picker-control { width: 100%; height: 52px; border: 1px solid var(--line-strong); border-radius: 9px; background: var(--porcelain); box-shadow: none; transition: border-color 140ms ease, box-shadow 140ms ease; }
+.city-picker-shell { position: relative; min-width: 0; }
+.city-picker-control { display: flex; align-items: center; width: 100%; height: 52px; padding: 0 11px 0 14px; border: 1px solid var(--line-strong); border-radius: 9px; background: var(--porcelain); box-shadow: none; transition: border-color 140ms ease, box-shadow 140ms ease; }
 .city-picker-control:focus-within { border-color: var(--brand-forest); box-shadow: 0 0 0 3px rgb(64 92 80 / 10%); }
-.city-picker-control input { min-width: 0; color: var(--brand-pine); font-size: .9rem; font-weight: 650; }
+.city-picker-control input { flex: 1 1 auto; width: 100%; min-width: 0; height: 100%; padding: 0; border: 0; outline: 0; background: transparent; color: var(--brand-pine); font-size: .9rem; font-weight: 650; }
 .city-picker-control input::placeholder { color: var(--brand-sage); font-weight: 500; }
-.city-picker-control [data-slot="input-group-button"] { color: var(--brand-forest); }
-.city-picker-clear { display: none; flex: 0 0 auto; place-items: center; width: 24px; height: 24px; border: 0; border-radius: 5px; background: transparent; color: var(--muted-ink); cursor: pointer; }
-.city-picker-clear[data-popup-open] { display: grid; }
-.city-picker-clear svg { width: 15px; height: 15px; }
-.city-picker-clear:hover { background: var(--mist); color: var(--brand-pine); }
-.city-picker-popup { overflow: hidden; border: 1px solid var(--line); border-radius: 12px; background: var(--porcelain); box-shadow: 0 18px 44px rgb(39 48 44 / 13%); }
-.city-picker-option { min-height: 54px; padding: 9px 36px 9px 11px; border-radius: 7px; color: var(--brand-pine); }
+.city-picker-clear, .city-picker-toggle { display: grid; flex: 0 0 auto; place-items: center; width: 28px; height: 28px; margin-left: 8px; border: 0; border-radius: 5px; background: transparent; color: var(--brand-forest); cursor: pointer; }
+.city-picker-clear svg, .city-picker-toggle svg { width: 15px; height: 15px; transition: transform 140ms ease; }
+.city-picker-toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
+.city-picker-clear:hover, .city-picker-toggle:hover { background: var(--mist); color: var(--brand-pine); }
+.city-picker-popup { position: absolute; z-index: 80; top: calc(100% + 6px); left: 0; overflow: hidden; width: 100%; border: 1px solid var(--line); border-radius: 12px; background: var(--porcelain); box-shadow: 0 18px 44px rgb(39 48 44 / 13%); }
+.city-picker-list { max-height: min(340px, calc(100vh - 120px)); overflow-y: auto; padding: 5px; }
+.city-picker-option { display: flex; gap: 10px; align-items: center; width: 100%; min-height: 54px; padding: 9px 11px; border: 0; border-radius: 7px; background: transparent; color: var(--brand-pine); text-align: left; cursor: pointer; }
 .city-picker-option[data-highlighted] { background: var(--mist); color: var(--brand-pine); }
+.city-picker-option:hover { background: var(--mist); }
 .city-picker-option > span:first-child { display: grid; min-width: 0; gap: 2px; }
 .city-picker-option strong { overflow: hidden; font-size: .84rem; font-weight: 720; text-overflow: ellipsis; white-space: nowrap; }
 .city-picker-option small { overflow: hidden; color: var(--muted-ink); font-size: .7rem; line-height: 1.35; text-overflow: ellipsis; white-space: nowrap; }
 .city-picker-option em { margin-left: auto; color: var(--brand-sage); font-size: .64rem; font-style: normal; white-space: nowrap; }
 .city-picker-option[data-disabled] { opacity: .48; }
+.city-picker-option:disabled { opacity: .48; cursor: not-allowed; }
+.city-picker-empty { padding: 18px 12px; color: var(--muted-ink); font-size: .78rem; text-align: center; }
 .home-launcher .city-picker { margin-top: 20px; }
 .home-launcher .city-picker-label, .salary-input-panel .city-picker-label { display: block; margin: 0; }
 .city-picker-salary .city-picker-control { height: 50px; }
@@ -1583,10 +1584,10 @@ a, button, input, select, summary { outline-color: var(--brand-blue); outline-of
   border-radius: 9px;
   background-color: #fffefa;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2327302c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
-  background-position: right 18px center;
+  background-position: right 20px center;
   background-repeat: no-repeat;
   background-size: 16px;
-  padding-right: 50px;
+  padding-right: 52px;
   color: var(--brand-ink);
 }
 .salary-answer-panel { background: #fffefa; }
@@ -2298,8 +2299,7 @@ main, section, header, footer { min-width: 0; max-width: 100%; }
 .studio-city-fields { display: grid; gap: 13px; margin-top: 24px; }
 .comparison-studio [data-slot="select-trigger"] { height: 52px; min-width: 0; border-color: var(--line-strong); border-radius: 9px; background: var(--porcelain); box-shadow: none; }
 .comparison-studio [data-slot="select-trigger"]:focus-visible { border-color: var(--brand-blue); box-shadow: 0 0 0 3px rgb(64 92 80 / 10%); }
-.studio-native-select { width: 100%; height: 44px; min-width: 0; padding: 0 34px 0 13px; border: 1px solid var(--line-strong); border-radius: 9px; background-color: var(--porcelain); color: var(--brand-pine); font-size: .86rem; font-weight: 650; }
-.city-picker .studio-native-select { height: 52px; }
+.studio-native-select { width: 100%; height: 44px; min-width: 0; appearance: none; padding: 0 48px 0 13px; border: 1px solid var(--line-strong); border-radius: 9px; background-color: var(--porcelain); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2327302c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-position: right 20px center; background-repeat: no-repeat; background-size: 16px; color: var(--brand-pine); font-size: .86rem; font-weight: 650; }
 .studio-native-select:focus-visible { border-color: var(--brand-blue); box-shadow: 0 0 0 3px rgb(64 92 80 / 10%); outline: 0; }
 .studio-swap { width: 100%; height: 36px; justify-content: center; border: 0; border-radius: 8px; background: var(--mist); color: var(--brand-forest); box-shadow: none; font-size: .73rem; font-weight: 700; }
 .studio-swap:hover { background: var(--line); color: var(--brand-ink); }
